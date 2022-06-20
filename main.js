@@ -108,7 +108,7 @@
             onmouseover="this.style.color='#fee43b'" 
             onmouseout="this.style.color='#b8c1ca'"
             >
-                <img  height="35" width="35" alt="" src="https://www.shareicon.net/data/512x512/2016/09/21/830287_lightning_512x512.png">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24"><path d="M11 15H6L13 1V9H18L11 23V15Z" fill="#fee43b"/></svg>
                 <span  
                     class="m-sidebarNavigationItem__text m-legible"
                     style="font-weight: 700;font-size: 19px;line-height: 24px;"
