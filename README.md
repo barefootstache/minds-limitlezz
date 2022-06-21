@@ -1,5 +1,7 @@
 # Minds Limitlezz
 
+![Minds Limitlezz Widget](./assets/img/v1.1-minds-limitlezz-widget.png)
+
 Improve your Minds experience.
 
 ## Features
@@ -8,6 +10,9 @@ Improve your Minds experience.
 
 - Add widget to existing navigation menu on the left
 - Able to open and close the widget
+
+![Minds Limitlezz Widget Open](./assets/img/v1.1-sidemenu-minds-limitlezz-widget-open.png)
+![Minds Limitlezz Widget Close](./assets/img/v1.1-sidemenu-minds-limitlezz-widget-close.png)
 
 #### Auto Scroller
 
