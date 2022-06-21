@@ -1,10 +1,11 @@
 // ==UserScript==
 // @name          Minds Limitlezz
 // @version       1.1
-// @updateURL     https://raw.githubusercontent.com/lynxdingo/mindslimitlezz/main.user.js
+// @namespace     https://github.com/barefootstache/minds-limitlezz
+// @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
 // @include       https://www.minds.com/*
-// @copyright     2022, lynxdingo (https://openuserjs.org/users/lynxdingo)
+// @copyright     2022, barefootstache (https://openuserjs.org/users/barefootstache)
 // @license       MIT
 // ==/UserScript==
 
