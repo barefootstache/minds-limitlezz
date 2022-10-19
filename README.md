@@ -39,7 +39,7 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ### Version 1.2
 
-- can start and stop the *Auto Scroller* with the SPACE key, this deactivates the option to scroll using the SPACE key
+- can start and stop the *Auto Scroller* with the SPACE key. This needs to be activated first. Make sure to deactivate it to use SPACE as expected.
 - can hide reminded content
 - can hide embeded content
 

@@ -22,28 +22,28 @@
     style.innerHTML = `
     /* Newsfeed page */
     m-newsfeed--boost-rotator,
-	m-featured-content, 
-	.m-newsfeed--boost-sidebar,
-	.m-groupGrid__right.m-pageLayout__pane--right {
-		display:none
-	}
+  m-featured-content, 
+  .m-newsfeed--boost-sidebar,
+  .m-groupGrid__right.m-pageLayout__pane--right {
+    display:none
+  }
 
-	.m-newsfeed--feed.m-pageLayout__pane--main,
-	.m-pageLayout__pane--main.m-pageLayout__pane--main {
-		width: 100%;
-		max-width: 100%;
-	}
+  .m-newsfeed--feed.m-pageLayout__pane--main,
+  .m-pageLayout__pane--main.m-pageLayout__pane--main {
+    width: 100%;
+    max-width: 100%;
+  }
 
-	/* Keeps media only */
-	/* <user_name>?layout=grid */
-	m-feedgrid m-activity__minimalmetrics,
-	m-feedgrid m-activity__ownerblock,
-	m-feedgrid .m-activityContent__mediaDescription,
-	m-feedgrid .m-activityContent__message,
-	m-feedgrid .m-activity__remindDeletedNotice,
-	m-feedgrid .meta.m-rich-embed-has-thumbnail {
-		display:none;
-	}
+  /* Keeps media only */
+  /* <user_name>?layout=grid */
+  m-feedgrid m-activity__minimalmetrics,
+  m-feedgrid m-activity__ownerblock,
+  m-feedgrid .m-activityContent__mediaDescription,
+  m-feedgrid .m-activityContent__message,
+  m-feedgrid .m-activity__remindDeletedNotice,
+  m-feedgrid .meta.m-rich-embed-has-thumbnail {
+    display:none;
+  }
 
   /* Fix margin-bottom for adding Minds Limitlezz Widget */
   m-sidebarmore__trigger {
@@ -79,7 +79,7 @@
   }
 
   .minds-limitlezz-widget-auto-scroller .button.green,
-	.minds-limitlezz-widget-auto-scroller .button.red-view {
+  .minds-limitlezz-widget-auto-scroller .button.red-view {
     display: block;
   }
   
@@ -93,7 +93,7 @@
   }
 
   .minds-limitlezz-widget-auto-scroller .button.red:hover,
-	.minds-limitlezz-widget-auto-scroller .button.red-view:hover {
+  .minds-limitlezz-widget-auto-scroller .button.red-view:hover {
     color: red;
     border-color: red;
   }
@@ -138,6 +138,7 @@
                 </br>
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embeded" class="marr4 button red-view">HIDE EMBEDED</a>
+								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span>
             </div>
         </div>
     `;
@@ -151,7 +152,8 @@
       const panel = widget.nextElementSibling;
       if (panel.style.display === "block") {
         panel.style.display = "none";
-      } else {
+      }
+      else {
         panel.style.display = "block";
       }
     });
@@ -167,12 +169,14 @@
     const autoTime = document.getElementById("auto-time");
     const autoStart = document.getElementById("auto-start");
     const autoStop = document.getElementById("auto-stop");
+    const activateHotkeys = document.getElementById("activate-hotkeys");
 
     let stopAuto,
       timeInMs = 100,
       distanceInPx = 25,
-      state = 0;
-    
+      state = 0,
+      checked = false;
+
     const start = () => {
       //document.body.scrollHeight scrollTo
       stopAuto = setInterval(() => window.scrollBy(0, distanceInPx), timeInMs);
@@ -180,7 +184,7 @@
       autoStop.style.display = "block";
       state = 1;
     }
-    
+
     const stop = () => {
       clearInterval(stopAuto);
       autoStop.style.display = "none";
@@ -194,6 +198,9 @@
     autoTime.addEventListener("change", (el) => {
       timeInMs = el.target.value;
     });
+    activateHotkeys.addEventListener("change", (el) => {
+      checked = el.target.checked;
+    });
     autoStart.addEventListener("click", () => {
       start();
     });
@@ -201,16 +208,19 @@
       stop();
     });
 
-    window.onkeydown = (e) => { 
-      if(e.keyCode == 32){
-        if(state === 1) {
-          stop();
-        } else if(state === 0) {
-         	start(); 
+    window.onkeydown = (e) => {
+      if (checked) {
+        if (e.keyCode == 32) {
+          if (state === 1) {
+            stop();
+          }
+          else if (state === 0) {
+            start();
+          }
         }
+        return !(e.keyCode == 32);
       }
-      return !(e.keyCode == 32);
-		};
+    };
   }
 
   function addContentHider() {
