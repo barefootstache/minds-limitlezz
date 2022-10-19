@@ -18,13 +18,15 @@ Improve your Minds experience.
 
 Simple auto scroller that can be altered from the default `100ms` and `25px` scroll speed.
 
+Can start and stop it with SPACE key after activating hotkeys. Make sure to deactivate before typing.
+
 ### Newsfeed
 
 - Removes boosted content
 - Removes content on the right
 - Expands the feed to fill the whole page
 - Can hide reminded content
-- Can hide embeded content
+- Can hide embedded content
 
 ### User Account Gallery Grid View
 

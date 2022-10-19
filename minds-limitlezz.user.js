@@ -137,7 +137,7 @@
                 <span class="marr4">Hide Content</span>
                 </br>
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
-                <a id="hide-embeded" class="marr4 button red-view">HIDE EMBEDED</a>
+                <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
 								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span>
             </div>
         </div>
@@ -225,7 +225,7 @@
 
   function addContentHider() {
     const hideReminded = document.getElementById("hide-reminded");
-    const hideEmbded = document.getElementById("hide-embeded");
+    const hideEmbedded = document.getElementById("hide-embedded");
 
     hideReminded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
@@ -239,7 +239,7 @@
         }
       }
     });
-    hideEmbded.addEventListener("click", () => {
+    hideEmbedded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
