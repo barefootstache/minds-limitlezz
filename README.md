@@ -35,6 +35,12 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ## Change Log
 
+### Version 1.2
+
+- can start and stop the *Auto Scroller* with the SPACE key, this deactivates the option to scroll using the SPACE key
+- can hide reminded content
+- can hide embeded content
+
 ### Version 1.1
 
 - add Minds Limitlezz widget
