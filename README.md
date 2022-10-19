@@ -1,6 +1,6 @@
 # Minds Limitlezz
 
-![Minds Limitlezz Widget](./assets/img/v1.1-minds-limitlezz-widget.png)
+![Minds Limitlezz Widget](./assets/img/v1.2-minds-limitlezz-widget.png)
 
 Improve your Minds experience.
 
@@ -23,6 +23,8 @@ Simple auto scroller that can be altered from the default `100ms` and `25px` scr
 - Removes boosted content
 - Removes content on the right
 - Expands the feed to fill the whole page
+- Can hide reminded content
+- Can hide embeded content
 
 ### User Account Gallery Grid View
 
