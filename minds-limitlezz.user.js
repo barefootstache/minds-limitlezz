@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.1
+// @version       1.2
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -78,9 +78,11 @@
     margin: 4px;
   }
 
-  .minds-limitlezz-widget-auto-scroller .button.green {
+  .minds-limitlezz-widget-auto-scroller .button.green,
+	.minds-limitlezz-widget-auto-scroller .button.red-view {
     display: block;
   }
+  
   .minds-limitlezz-widget-auto-scroller .button.green:hover {
     color: green;
     border-color: green;
@@ -89,7 +91,9 @@
   .minds-limitlezz-widget-auto-scroller .button.red {
     display: none;
   }
-  .minds-limitlezz-widget-auto-scroller .button.red:hover {
+
+  .minds-limitlezz-widget-auto-scroller .button.red:hover,
+	.minds-limitlezz-widget-auto-scroller .button.red-view:hover {
     color: red;
     border-color: red;
   }
@@ -148,6 +152,7 @@
     });
 
     addAutoScroller();
+    addContentHider();
 
     console.debug("MindsLimitlezz: add widget");
   }
@@ -158,9 +163,25 @@
     const autoStart = document.getElementById("auto-start");
     const autoStop = document.getElementById("auto-stop");
 
-    let stop,
+    let stopAuto,
       timeInMs = 100,
-      distanceInPx = 25;
+      distanceInPx = 25,
+      state = 0;
+    
+    const start = () => {
+      //document.body.scrollHeight scrollTo
+      stopAuto = setInterval(() => window.scrollBy(0, distanceInPx), timeInMs);
+      autoStart.style.display = "none";
+      autoStop.style.display = "block";
+      state = 1;
+    }
+    
+    const stop = () => {
+      clearInterval(stopAuto);
+      autoStop.style.display = "none";
+      autoStart.style.display = "block";
+      state = 0;
+    }
 
     autoDistance.addEventListener("change", (el) => {
       distanceInPx = el.target.value;
@@ -169,15 +190,50 @@
       timeInMs = el.target.value;
     });
     autoStart.addEventListener("click", () => {
-      //document.body.scrollHeight scrollTo
-      stop = setInterval(() => window.scrollBy(0, distanceInPx), timeInMs);
-      autoStart.style.display = "none";
-      autoStop.style.display = "block";
+      start();
     });
     autoStop.addEventListener("click", () => {
-      clearInterval(stop);
-      autoStop.style.display = "none";
-      autoStart.style.display = "block";
+      stop();
+    });
+
+    window.onkeydown = (e) => { 
+      if(e.keyCode == 32){
+        if(state === 1) {
+          stop();
+        } else if(state === 0) {
+         	start(); 
+        }
+      }
+      return !(e.keyCode == 32);
+		};
+  }
+
+  function addContentHider() {
+    const hideReminded = document.getElementById("hide-reminded");
+    const hideEmbded = document.getElementById("hide-embeded");
+
+    hideReminded.addEventListener("click", () => {
+      const items = document.getElementsByTagName("m-activity");
+      for (let i = 0; i < items.length; i++) {
+        if (
+          (items[i].innerHTML.includes("Reminded") ||
+            items[i].innerHTML.includes("remindIcon")) &&
+          items[i].style.display != "none"
+        ) {
+          items[i].style.display = "none";
+        }
+      }
+    });
+    hideEmbded.addEventListener("click", () => {
+      const items = document.getElementsByTagName("m-activity");
+      for (let i = 0; i < items.length; i++) {
+        if (
+          items[i].innerHTML.includes("minds-rich-embed") &&
+          items[i].style.display != "none"
+        ) {
+          items[i].style.display = "none";
+        }
+      }
     });
   }
 
