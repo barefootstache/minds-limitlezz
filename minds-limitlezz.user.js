@@ -73,7 +73,7 @@
     padding: 4px;
     cursor: pointer;
     border: 1px solid #555;
-    width: 100px;
+    width: 120px;
     text-align: center;
     margin: 4px;
   }
@@ -133,6 +133,12 @@
                 <a id="auto-start" class="marr4 button green">START</a>
                 <a id="auto-stop" class="marr4 button red">STOP</a>
             </div>
+            <div class="minds-limitlezz-widget-auto-scroller">
+                <span class="marr4">Hide Content</span>
+                </br>
+                <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
+                <a id="hide-embeded" class="marr4 button red-view">HIDE EMBEDED</a>
+            </div>
         </div>
     `;
 
@@ -142,7 +148,6 @@
 
     const widget = document.getElementById("minds-limitlezz-widget-button");
     widget.addEventListener("click", () => {
-      //this.classList.toggle("active");
       const panel = widget.nextElementSibling;
       if (panel.style.display === "block") {
         panel.style.display = "none";
