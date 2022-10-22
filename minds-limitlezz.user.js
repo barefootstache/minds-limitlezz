@@ -14,12 +14,14 @@
 (function () {
   "use strict";
 
-  function addCSS() {
-    // create style element
-    const style = document.createElement("style");
+  function addCSS(appendCss = '') {
+    const ID = 'MINDS_LIMITLEZZ';
+
+    // get or create style element
+    const style = document.getElementById(ID) ? document.getElementById(ID) : document.createElement("style");
 
     // add CSS styles
-    style.innerHTML = `
+    const mainCss = `
     /* Newsfeed page */
     m-newsfeed--boost-rotator,
   m-featured-content, 
@@ -99,6 +101,9 @@
   }
   `;
 
+  style.innerHTML = mainCss + appendCss;
+  style.id = ID;
+
     // append the style to the DOM in <head> section
     document.head.appendChild(style);
     console.debug("MindsLimitlezz: add CSS");
@@ -138,7 +143,8 @@
                 </br>
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
-								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span>
+								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
+								<input id="activate-gridview" type="checkbox"> <span>Activate Grid View</span>
             </div>
         </div>
     `;
@@ -170,12 +176,13 @@
     const autoStart = document.getElementById("auto-start");
     const autoStop = document.getElementById("auto-stop");
     const activateHotkeys = document.getElementById("activate-hotkeys");
+    const activateGridView = document.getElementById("activate-gridview");
 
     let stopAuto,
       timeInMs = 100,
       distanceInPx = 25,
-      state = 0,
-      checked = false;
+      state = 0;
+      let checkedActivateHotkeys = false, checkedActivateGridView = false;
 
     const start = () => {
       //document.body.scrollHeight scrollTo
@@ -199,7 +206,15 @@
       timeInMs = el.target.value;
     });
     activateHotkeys.addEventListener("change", (el) => {
-      checked = el.target.checked;
+      checkedActivateHotkeys = el.target.checked;
+    });
+    activateGridView.addEventListener("change", (el) => {
+      checkedActivateGridView = el.target.checked;
+      if(checkedActivateGridView){
+        addGridViewCSS();
+      }else{
+        addCSS();
+      }
     });
     autoStart.addEventListener("click", () => {
       start();
@@ -209,7 +224,7 @@
     });
 
     window.onkeydown = (e) => {
-      if (checked) {
+      if (checkedActivateHotkeys) {
         if (e.keyCode == 32) {
           if (state === 1) {
             stop();
@@ -250,6 +265,68 @@
         }
       }
     });
+  }
+
+  function addGridViewCSS() {
+    const gridviewCSS = `
+    .minds-list > div:nth-child(1) {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .minds-list {
+      display: grid;
+    }
+
+    m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
+      display: none;
+    }
+
+    .m-activityContent__media--image img {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    
+    m-videoPlayer, m-videoPlayer--scrollaware {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    m-group-profile__feed.ng-star-inserted {
+      width: 100%;
+    }
+
+    minds-button-thumbs-down a, m-supermind__button m-button {
+      display: none;
+    }
+    
+    minds-button-thumbs-down, m-supermind__button {
+      max-width: 0px;
+    }
+    
+    .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
+      display: none;
+    }
+    
+    m-comments__entityoutletv2 {
+      display: none !important;
+    }
+
+    m-activityv2content__multiimage {
+      width: 367px;
+    }
+    
+    m-activityv2content__multiimage > div {
+      padding-bottom: 150% !important;
+    }
+
+    m-activityv2content__multiimage.ng-tns-c338-854 > div:nth-child(1) {
+      /* padding-bottom: 56.25%; */
+      padding-bottom: 150%;
+    }
+    `;
+
+    addCSS(gridviewCSS);
   }
 
   // Source: https://stackoverflow.com/a/61511955
