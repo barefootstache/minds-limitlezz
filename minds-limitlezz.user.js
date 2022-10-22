@@ -22,6 +22,11 @@
 
     // add CSS styles
     const mainCss = `
+    /* Removes max width */
+    .m-pageLayout__container {
+      max-width: revert;
+    }
+
     /* Newsfeed page */
     m-newsfeed--boost-rotator,
   m-featured-content, 
@@ -99,6 +104,42 @@
     color: red;
     border-color: red;
   }
+
+  /* --- Groups Page --- */
+  m-groups--profile .m-group__info, .m-group__feeds {
+    max-width: revert;
+  }
+
+  /* Groups Page Info Section */
+  m-groups--profile .m-groupInfo__name.m-group-info-name > div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  m-groups--profile .m-groupInfo__name.m-group-info-name h1 {
+    font-size: 26px;
+  }
+
+  /* Groups Page Content Section */
+  m-groups--profile m-activityv2__content {
+    width: revert !important;
+    margin: auto;
+  }
+
+  m-groups--profile m-activityv2__content .m-activityContent__media--image.m-activityContent__media {
+    display: flex;
+  }
+
+  m-groups--profile m-activityv2__content .m-activityContent__media--image.m-activityContent__media a {
+    margin: auto;
+  }
+
+  m-groups--profile m-activityv2__content m-videoplayer--scrollaware {
+    height: revert !important;
+    width: revert !important;
+    min-height: 500px;
+    max-height: 750px;
+  }
   `;
 
   style.innerHTML = mainCss + appendCss;
@@ -144,7 +185,7 @@
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
 								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
-								<input id="activate-gridview" type="checkbox"> <span>Activate Grid View</span>
+								<input id="activate-gridview" type="checkbox"> <span>Activate Group Grid View</span>
             </div>
         </div>
     `;
@@ -213,7 +254,7 @@
       if(checkedActivateGridView){
         addGridViewCSS();
       }else{
-        addCSS();
+        removeGridView();
       }
     });
     autoStart.addEventListener("click", () => {
@@ -269,60 +310,101 @@
 
   function addGridViewCSS() {
     const gridviewCSS = `
-    .minds-list > div:nth-child(1) {
+    m-groups--profile .minds-list > div:nth-child(1) {
       display: flex;
       flex-wrap: wrap;
     }
 
-    .minds-list {
+    m-groups--profile .minds-list {
       display: grid;
     }
 
-    m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
+    m-groups--profile m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
       display: none;
     }
 
-    .m-activityContent__media--image img {
-      width: 100% !important;
-      height: 100% !important;
-    }
-    
-    m-videoPlayer, m-videoPlayer--scrollaware {
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    m-group-profile__feed.ng-star-inserted {
+    m-groups--profile m-group-profile__feed.ng-star-inserted {
       width: 100%;
     }
 
-    minds-button-thumbs-down a, m-supermind__button m-button {
+    m-groups--profile .m-group__feeds {
+      max-width: revert;
+    }
+
+    m-groups--profile .m-mindsList__tools {
+      display: none;
+    }
+
+    /* Content Element */
+    m-groups--profile m-activityv2 {
+      width: 30%;
+      height: 750px;
+    }
+
+    m-groups--profile m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted {
+      display: none;
+    }
+
+    m-groups--profile m-activityv2 .m-activityContentText__innerWrapper {
+      height: 2px;
+      background-color: aqua;
+      padding: 0 !important;
+    }
+
+    m-groups--profile m-activityv2 .m-activityContentText__body,
+    m-groups--profile m-activityv2 .m-activityContentText__title {
+      display: none;
+    }
+
+    m-groups--profile m-activityv2 .m-activityContent__media--image img {
+      width: 100% !important;
+      height: 650px !important;
+      max-height: 650px !important;
+    }
+    
+    m-groups--profile m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware {
+      width: 100% !important;
+      height: 650px !important;
+      max-height: 650px !important;
+    }
+
+    m-groups--profile m-activityv2 minds-button-thumbs-down a, m-supermind__button m-button {
       display: none;
     }
     
-    minds-button-thumbs-down, m-supermind__button {
+    m-groups--profile m-activityv2 minds-button-thumbs-down, m-supermind__button {
       max-width: 0px;
     }
     
-    .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
+    m-groups--profile m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
       display: none;
     }
     
-    m-comments__entityoutletv2 {
+    m-groups--profile m-activityv2 m-comments__entityoutletv2 {
       display: none !important;
     }
 
-    m-activityv2content__multiimage {
+    m-groups--profile m-activityv2 m-activityv2content__multiimage {
       width: 367px;
     }
     
-    m-activityv2content__multiimage > div {
-      padding-bottom: 150% !important;
+    m-groups--profile m-activityv2 m-activityv2content__multiimage > div {
+      padding-bottom: 650px !important;
     }
 
-    m-activityv2content__multiimage.ng-tns-c338-854 > div:nth-child(1) {
-      /* padding-bottom: 56.25%; */
-      padding-bottom: 150%;
+    m-groups--profile m-activityv2 m-activityv2content__multiimage > div:nth-child(1) {
+      padding-bottom: 650px;
+    }
+    `;
+
+    addCSS(gridviewCSS);
+  }
+
+  function removeGridView() {
+    const gridviewCSS = `
+    m-groups--profile m-activityv2__content m-activityv2content__multiimage {
+      min-height: 750px;
+      min-width: 750px;
     }
     `;
 
@@ -352,7 +434,7 @@
   }
 
   // --- MAIN --- //
-  addCSS();
+  removeGridView();
 
   waitForElm(".m-sidebarNavigation__list").then(() => {
     addWidget();
