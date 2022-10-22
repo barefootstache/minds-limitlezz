@@ -416,6 +416,25 @@
     m-groups--profile m-activityv2 m-activityv2content__multiimage > div:nth-child(1) {
       padding-bottom: 650px;
     }
+
+    /* Embeds */
+    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail {
+      height: 650px;
+    }
+
+    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail img {
+        width: 100% !important;
+        height: 100% !important;
+        max-height: revert !important;
+      }
+    }
+
+    m-groups--profile m-activityv2 minds-rich-embed .m-activityContent__media--richEmbed .meta,
+    m-groups--profile m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
+    m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
+    m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta {
+      display: none !important;
+     }
     `;
 
     addCSS(gridviewCSS);
