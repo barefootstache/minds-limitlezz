@@ -14,11 +14,13 @@
 (function () {
   "use strict";
 
-  function addCSS(appendCss = '') {
-    const ID = 'MINDS_LIMITLEZZ';
+  function addCSS(appendCss = "") {
+    const ID = "MINDS_LIMITLEZZ";
 
     // get or create style element
-    const style = document.getElementById(ID) ? document.getElementById(ID) : document.createElement("style");
+    const style = document.getElementById(ID)
+      ? document.getElementById(ID)
+      : document.createElement("style");
 
     // add CSS styles
     const mainCss = `
@@ -158,8 +160,8 @@
   }
   `;
 
-  style.innerHTML = mainCss + appendCss;
-  style.id = ID;
+    style.innerHTML = mainCss + appendCss;
+    style.id = ID;
 
     // append the style to the DOM in <head> section
     document.head.appendChild(style);
@@ -215,8 +217,7 @@
       const panel = widget.nextElementSibling;
       if (panel.style.display === "block") {
         panel.style.display = "none";
-      }
-      else {
+      } else {
         panel.style.display = "block";
       }
     });
@@ -239,7 +240,8 @@
       timeInMs = 100,
       distanceInPx = 25,
       state = 0;
-      let checkedActivateHotkeys = false, checkedActivateGridView = false;
+    let checkedActivateHotkeys = false,
+      checkedActivateGridView = false;
 
     const start = () => {
       //document.body.scrollHeight scrollTo
@@ -247,14 +249,14 @@
       autoStart.style.display = "none";
       autoStop.style.display = "block";
       state = 1;
-    }
+    };
 
     const stop = () => {
       clearInterval(stopAuto);
       autoStop.style.display = "none";
       autoStart.style.display = "block";
       state = 0;
-    }
+    };
 
     autoDistance.addEventListener("change", (el) => {
       distanceInPx = el.target.value;
@@ -267,9 +269,13 @@
     });
     activateGridView.addEventListener("change", (el) => {
       checkedActivateGridView = el.target.checked;
-      if(checkedActivateGridView){
+      if (checkedActivateGridView) {
         addGridViewCSS();
-      }else{
+        timeInMs = 2000;
+        autoTime.value = timeInMs;
+        distanceInPx = 750;
+        autoDistance.value = distanceInPx;
+      } else {
         removeGridView();
       }
     });
@@ -285,8 +291,7 @@
         if (e.keyCode == 32) {
           if (state === 1) {
             stop();
-          }
-          else if (state === 0) {
+          } else if (state === 0) {
             start();
           }
         }
