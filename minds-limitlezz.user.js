@@ -117,6 +117,15 @@
     border-color: red;
   }
 
+  /* --- Channel Page --- */
+  m-channel__feed .m-pageLayout__pane--main {
+    max-width: revert !important;
+  }
+
+  m-channel__feed .m-channelFeed__sidebar.m-pageLayout__pane--right {
+    display: none;
+  }
+
   /* --- Groups Page --- */
   m-groups--profile .m-group__info, .m-group__feeds {
     max-width: revert;
@@ -389,11 +398,15 @@
       max-height: 650px !important;
     }
 
-    m-groups--profile m-activityv2 minds-button-thumbs-down a, m-supermind__button m-button {
+    m-groups--profile m-activityv2 minds-button-thumbs-down a,
+    m-groups--profile m-activityv2 minds-button-comment a,
+    m-groups--profile m-activityv2 m-supermind__button m-button {
       display: none;
     }
     
-    m-groups--profile m-activityv2 minds-button-thumbs-down, m-supermind__button {
+    m-groups--profile m-activityv2 minds-button-thumbs-down, 
+    m-groups--profile m-activityv2 minds-button-comment, 
+    m-groups--profile m-activityv2 m-supermind__button {
       max-width: 0px;
     }
     
