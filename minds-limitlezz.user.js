@@ -291,6 +291,10 @@
         autoDistance.value = distanceInPx;
       } else {
         removeGridView();
+        timeInMs = 100;
+        autoTime.value = timeInMs;
+        distanceInPx = 25;
+        autoDistance.value = distanceInPx;
       }
     });
     autoStart.addEventListener("click", () => {
