@@ -14,6 +14,8 @@
 (function () {
   "use strict";
 
+  const mindsBlue = '#1b85d6';
+
   function addCSS(appendCss = "") {
     const ID = "MINDS_LIMITLEZZ";
 
@@ -33,7 +35,8 @@
     m-newsfeed--boost-rotator,
   m-featured-content, 
   .m-newsfeed--boost-sidebar,
-  .m-groupGrid__right.m-pageLayout__pane--right {
+  .m-groupGrid__right.m-pageLayout__pane--right,
+  .m-groupsMemberships__sidebar {
     display: none;
   }
 
@@ -369,9 +372,14 @@
 
     m-groups--profile .minds-list > div:nth-child(1),
     m-newsfeed--subscribed .minds-list,
-    m-channel__feed .m-channelFeedList__entities {
+    m-channel__feed .m-channelFeedList__entities,
+    m-groupsmemberships div.ng-star-inserted {
       display: grid;
       grid-template-columns: 33% 33% 33%;
+    }
+
+    m-groupsmemberships div.ng-star-inserted {
+      column-gap: 15px;
     }
 
     m-groups--profile m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
@@ -398,14 +406,38 @@
       display: none;
     }
 
+    /* --- Group Memberships --- */
+    m-publishercard {
+      max-height: 200px;
+      max-width: 420px;
+    }
+
+    m-publishercard .m-publisherCard {
+      padding: 16px !important;
+    }
+
+    m-publishercard .m-publisherCard .m-publisherCard__inner {
+      width: calc(420px - 32px);
+    }
+
+    m-publishercard .m-publisherCardOwnerRow__owner {
+      width: revert !important;
+    }
+
+    m-publishercard .m-publisherCard__desc {
+      display: none !important;
+    }
+
     /* Content Remind */
-    m-newsfeed--subscribed .m-activity__flagRow {
+    m-newsfeed--subscribed .m-activity__flagRow,
+    m-channel__feed .m-activity__flagRow {
       padding-bottom: revert !important;
       height: 2px;
       background-color: purple;
     }
 
-    m-newsfeed--subscribed .m-activity__flagRow m-activityv2__flag {
+    m-newsfeed--subscribed .m-activity__flagRow m-activityv2__flag,
+    m-channel__feed .m-activity__flagRow m-activityv2__flag {
       display: none;
     }
 
@@ -536,6 +568,11 @@
     `;
 
     addCSS(gridviewCSS);
+
+    if(document.URL === 'https://www.minds.com/groups/memberships'){
+      // document.getElementsByTagName("infinite-scroll")[0].addEventListener("scroll", () => {
+      window.addEventListener("scroll", highlightNew);
+    }
   }
 
   function removeGridView() {
@@ -549,6 +586,20 @@
     `;
 
     addCSS(gridviewCSS);
+
+    window.removeEventListener('scroll', highlightNew);
+  }
+
+  function highlightNew(){
+    const items = document.getElementsByTagName("m-publishercard");
+        for (let i = 0; i < items.length; i++) {
+          if (
+            items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
+            items[i].children[0].style['background-color'] != mindsBlue
+          ) {
+            items[i].children[0].style['background-color'] = mindsBlue;
+          }
+        }
   }
 
   // Source: https://stackoverflow.com/a/61511955
