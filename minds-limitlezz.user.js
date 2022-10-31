@@ -14,7 +14,7 @@
 (function () {
   "use strict";
 
-  const mindsBlue = '#1b85d6';
+  const mindsBlue = "#1b85d6";
 
   function addCSS(appendCss = "") {
     const ID = "MINDS_LIMITLEZZ";
@@ -219,6 +219,7 @@
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
                 <a id="hide-media-free" class="marr4 button red-view">HIDE MEDIA FREE</a>
+                <a id="hide-outdated" class="marr4 button red-view">HIDE OUTDATED</a>
 								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
 								<input id="activate-gridview" type="checkbox"> <span>Activate Feed Grid View</span>
             </div>
@@ -243,6 +244,25 @@
     addContentHider();
 
     console.debug("MindsLimitlezz: add widget");
+  }
+
+  function hideContentWidget() {
+    const hideOutdated = document.getElementById("hide-outdated");
+    const hideReminded = document.getElementById("hide-reminded");
+    const hideEmbedded = document.getElementById("hide-embedded");
+    const hideMediaFree = document.getElementById("hide-media-free");
+
+    if (location.href === "https://www.minds.com/groups/memberships") {
+      hideOutdated.style.display = "block";
+      hideReminded.style.display = "none";
+      hideEmbedded.style.display = "none";
+      hideMediaFree.style.display = "none";
+    } else {
+      hideOutdated.style.display = "none";
+      hideReminded.style.display = "block";
+      hideEmbedded.style.display = "block";
+      hideMediaFree.style.display = "block";
+    }
   }
 
   function addAutoScroller() {
@@ -325,6 +345,7 @@
     const hideReminded = document.getElementById("hide-reminded");
     const hideEmbedded = document.getElementById("hide-embedded");
     const hideMediaFree = document.getElementById("hide-media-free");
+    const hideOutdated = document.getElementById("hide-outdated");
 
     hideReminded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
@@ -355,6 +376,17 @@
         if (
           !items[i].innerHTML.includes("m-activityContent__media--image") &&
           !items[i].innerHTML.includes("m-activityContent__media--video") &&
+          items[i].style.display != "none"
+        ) {
+          items[i].style.display = "none";
+        }
+      }
+    });
+    hideOutdated.addEventListener("click", () => {
+      const items = document.getElementsByTagName("m-publishercard");
+      for (let i = 0; i < items.length; i++) {
+        if (
+          !items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
           items[i].style.display != "none"
         ) {
           items[i].style.display = "none";
@@ -569,7 +601,7 @@
 
     addCSS(gridviewCSS);
 
-    if(document.URL === 'https://www.minds.com/groups/memberships'){
+    if (document.URL === "https://www.minds.com/groups/memberships") {
       // document.getElementsByTagName("infinite-scroll")[0].addEventListener("scroll", () => {
       window.addEventListener("scroll", highlightNew);
     }
@@ -587,19 +619,19 @@
 
     addCSS(gridviewCSS);
 
-    window.removeEventListener('scroll', highlightNew);
+    window.removeEventListener("scroll", highlightNew);
   }
 
-  function highlightNew(){
+  function highlightNew() {
     const items = document.getElementsByTagName("m-publishercard");
-        for (let i = 0; i < items.length; i++) {
-          if (
-            items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
-            items[i].children[0].style['background-color'] != mindsBlue
-          ) {
-            items[i].children[0].style['background-color'] = mindsBlue;
-          }
-        }
+    for (let i = 0; i < items.length; i++) {
+      if (
+        items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
+        items[i].children[0].style["background-color"] != mindsBlue
+      ) {
+        items[i].children[0].style["background-color"] = mindsBlue;
+      }
+    }
   }
 
   // Source: https://stackoverflow.com/a/61511955
