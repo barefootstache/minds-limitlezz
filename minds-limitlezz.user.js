@@ -33,8 +33,9 @@
     m-newsfeed--boost-rotator,
   m-featured-content, 
   .m-newsfeed--boost-sidebar,
-  .m-groupGrid__right.m-pageLayout__pane--right {
-    display:none
+  .m-groupGrid__right.m-pageLayout__pane--right,
+  m-channelrecommendation {
+    display: none
   }
 
   .m-newsfeed--feed.m-pageLayout__pane--main,
@@ -61,7 +62,7 @@
   m-feedgrid .m-activityContent__message,
   m-feedgrid .m-activity__remindDeletedNotice,
   m-feedgrid .meta.m-rich-embed-has-thumbnail {
-    display:none;
+    display: none;
   }
 
   /* Fix margin-bottom for adding Minds Limitlezz Widget */
@@ -212,7 +213,7 @@
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
 								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
-								<input id="activate-gridview" type="checkbox"> <span>Activate Group Grid View</span>
+								<input id="activate-gridview" type="checkbox"> <span>Activate Feed Grid View</span>
             </div>
         </div>
     `;
@@ -340,39 +341,63 @@
 
   function addGridViewCSS() {
     const gridviewCSS = `
+    m-tophighlights,
+    m-channelrecommendation,
+    m-feednotice__outlet {
+      display: none !important;
+    }
+
     m-groups--profile .minds-list > div:nth-child(1),
+    m-newsfeed--subscribed .minds-list,
     m-channel__feed .m-channelFeedList__entities {
       display: grid;
       grid-template-columns: 33% 33% 33%;
     }
 
     m-groups--profile m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
+    m-newsfeed--subscribed m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
     m-channel__feed m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
       display: none;
     }
 
     m-groups--profile m-group-profile__feed.ng-star-inserted,
+    m-newsfeed--subscribed m-group-profile__feed.ng-star-inserted,
     m-channel__feed m-group-profile__feed.ng-star-inserted {
       width: 100%;
     }
 
     m-groups--profile .m-group__feeds,
+    m-newsfeed--subscribed .m-group__feeds,
     m-channel__feed .m-group__feeds {
       max-width: revert;
     }
 
     m-groups--profile .m-mindsList__tools,
+    m-newsfeed--subscribed .m-mindsList__tools,
     m-channel__feed .m-mindsList__tools {
+      display: none;
+    }
+
+    /* Content Remind */
+    m-newsfeed--subscribed .m-activity__flagRow {
+      padding-bottom: revert !important;
+      height: 2px;
+      background-color: purple;
+    }
+
+    m-newsfeed--subscribed .m-activity__flagRow m-activityv2__flag {
       display: none;
     }
 
     /* Content Element */
     m-groups--profile m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
+    m-newsfeed--subscribed m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
     m-channel__feed m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted {
       display: none;
     }
 
     m-groups--profile m-activityv2 .m-activityContentText__innerWrapper,
+    m-newsfeed--subscribed m-activityv2 .m-activityContentText__innerWrapper,
     m-channel__feed m-activityv2 .m-activityContentText__innerWrapper {
       height: 2px;
       background-color: aqua;
@@ -381,12 +406,15 @@
 
     m-groups--profile m-activityv2 .m-activityContentText__body,
     m-groups--profile m-activityv2 .m-activityContentText__title,
+    m-newsfeed--subscribed m-activityv2 .m-activityContentText__body,
+    m-newsfeed--subscribed m-activityv2 .m-activityContentText__title,
     m-channel__feed m-activityv2 .m-activityContentText__body,
     m-channel__feed m-activityv2 .m-activityContentText__title {
       display: none;
     }
 
     m-groups--profile m-activityv2 .m-activityContent__media--image img,
+    m-newsfeed--subscribed m-activityv2 .m-activityContent__media--image img,
     m-channel__feed m-activityv2 .m-activityContent__media--image img {
       width: 100% !important;
       height: 650px !important;
@@ -394,6 +422,7 @@
     }
     
     m-groups--profile m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware,
+    m-newsfeed--subscribed m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware,
     m-channel__feed m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware {
       width: 100% !important;
       height: 650px !important;
@@ -403,6 +432,9 @@
     m-groups--profile m-activityv2 minds-button-thumbs-down a,
     m-groups--profile m-activityv2 minds-button-comment a,
     m-groups--profile m-activityv2 m-supermind__button m-button,
+    m-newsfeed--subscribed m-activityv2 minds-button-thumbs-down a,
+    m-newsfeed--subscribed m-activityv2 minds-button-comment a,
+    m-newsfeed--subscribed m-activityv2 m-supermind__button m-button,
     m-channel__feed m-activityv2 minds-button-thumbs-down a,
     m-channel__feed m-activityv2 minds-button-comment a,
     m-channel__feed m-activityv2 m-supermind__button m-button {
@@ -412,6 +444,9 @@
     m-groups--profile m-activityv2 minds-button-thumbs-down, 
     m-groups--profile m-activityv2 minds-button-comment, 
     m-groups--profile m-activityv2 m-supermind__button,
+    m-newsfeed--subscribed m-activityv2 minds-button-thumbs-down, 
+    m-newsfeed--subscribed m-activityv2 minds-button-comment, 
+    m-newsfeed--subscribed m-activityv2 m-supermind__button,
     m-channel__feed m-activityv2 minds-button-thumbs-down, 
     m-channel__feed m-activityv2 minds-button-comment, 
     m-channel__feed m-activityv2 m-supermind__button {
@@ -419,37 +454,44 @@
     }
     
     m-groups--profile m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
+    m-newsfeed--subscribed m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
     m-channel__feed m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
       display: none;
     }
     
     m-groups--profile m-activityv2 m-comments__entityoutletv2,
+    m-newsfeed--subscribed m-activityv2 m-comments__entityoutletv2,
     m-channel__feed m-activityv2 m-comments__entityoutletv2 {
       display: none !important;
     }
 
     m-groups--profile m-activityv2 m-activityv2content__multiimage,
+    m-newsfeed--subscribed m-activityv2 m-activityv2content__multiimage,
     m-channel__feed m-activityv2 m-activityv2content__multiimage {
       width: 367px;
     }
     
     m-groups--profile m-activityv2 m-activityv2content__multiimage > div,
+    m-newsfeed--subscribed m-activityv2 m-activityv2content__multiimage > div,
     m-channel__feed m-activityv2 m-activityv2content__multiimage > div {
       padding-bottom: 650px !important;
     }
 
     m-groups--profile m-activityv2 m-activityv2content__multiimage > div:nth-child(1),
+    m-newsfeed--subscribed m-activityv2 m-activityv2content__multiimage > div:nth-child(1),
     m-channel__feed m-activityv2 m-activityv2content__multiimage > div:nth-child(1) {
       padding-bottom: 650px;
     }
 
     /* Embeds */
     m-groups--profile m-activityv2 minds-rich-embed a.thumbnail,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed a.thumbnail,
     m-channel__feed m-activityv2 minds-rich-embed a.thumbnail {
       height: 650px;
     }
 
     m-groups--profile m-activityv2 minds-rich-embed a.thumbnail img,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed a.thumbnail img,
     m-channel__feed m-activityv2 minds-rich-embed a.thumbnail img {
         width: 100% !important;
         height: 100% !important;
@@ -461,6 +503,10 @@
     m-groups--profile m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
     m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
     m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed .m-activityContent__media--richEmbed .meta,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
+    m-newsfeed--subscribed m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta,
     m-channel__feed m-activityv2 minds-rich-embed .m-activityContent__media--richEmbed .meta,
     m-channel__feed m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
     m-channel__feed m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
@@ -475,6 +521,7 @@
   function removeGridView() {
     const gridviewCSS = `
     m-groups--profile m-activityv2__content m-activityv2content__multiimage,
+    m-newsfeed--subscribed m-activityv2__content m-activityv2content__multiimage,
     m-channel__feed m-activityv2__content m-activityv2content__multiimage {
       min-height: 750px;
       min-width: 750px;
