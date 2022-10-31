@@ -340,59 +340,61 @@
 
   function addGridViewCSS() {
     const gridviewCSS = `
-    m-groups--profile .minds-list > div:nth-child(1) {
-      display: flex;
-      flex-wrap: wrap;
-    }
-
-    m-groups--profile .minds-list {
+    m-groups--profile .minds-list > div:nth-child(1),
+    m-channel__feed .m-channelFeedList__entities {
       display: grid;
+      grid-template-columns: 33% 33% 33%;
     }
 
-    m-groups--profile m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
+    m-groups--profile m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
+    m-channel__feed m-activity.m-border:nth-child(1) > m-activityv2:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
       display: none;
     }
 
-    m-groups--profile m-group-profile__feed.ng-star-inserted {
+    m-groups--profile m-group-profile__feed.ng-star-inserted,
+    m-channel__feed m-group-profile__feed.ng-star-inserted {
       width: 100%;
     }
 
-    m-groups--profile .m-group__feeds {
+    m-groups--profile .m-group__feeds,
+    m-channel__feed .m-group__feeds {
       max-width: revert;
     }
 
-    m-groups--profile .m-mindsList__tools {
+    m-groups--profile .m-mindsList__tools,
+    m-channel__feed .m-mindsList__tools {
       display: none;
     }
 
     /* Content Element */
-    m-groups--profile m-activityv2 {
-      width: 30%;
-      height: 750px;
-    }
-
-    m-groups--profile m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted {
+    m-groups--profile m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
+    m-channel__feed m-activityv2 .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted {
       display: none;
     }
 
-    m-groups--profile m-activityv2 .m-activityContentText__innerWrapper {
+    m-groups--profile m-activityv2 .m-activityContentText__innerWrapper,
+    m-channel__feed m-activityv2 .m-activityContentText__innerWrapper {
       height: 2px;
       background-color: aqua;
       padding: 0 !important;
     }
 
     m-groups--profile m-activityv2 .m-activityContentText__body,
-    m-groups--profile m-activityv2 .m-activityContentText__title {
+    m-groups--profile m-activityv2 .m-activityContentText__title,
+    m-channel__feed m-activityv2 .m-activityContentText__body,
+    m-channel__feed m-activityv2 .m-activityContentText__title {
       display: none;
     }
 
-    m-groups--profile m-activityv2 .m-activityContent__media--image img {
+    m-groups--profile m-activityv2 .m-activityContent__media--image img,
+    m-channel__feed m-activityv2 .m-activityContent__media--image img {
       width: 100% !important;
       height: 650px !important;
       max-height: 650px !important;
     }
     
-    m-groups--profile m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware {
+    m-groups--profile m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware,
+    m-channel__feed m-activityv2 m-videoPlayer, m-videoPlayer--scrollaware {
       width: 100% !important;
       height: 650px !important;
       max-height: 650px !important;
@@ -400,42 +402,55 @@
 
     m-groups--profile m-activityv2 minds-button-thumbs-down a,
     m-groups--profile m-activityv2 minds-button-comment a,
-    m-groups--profile m-activityv2 m-supermind__button m-button {
+    m-groups--profile m-activityv2 m-supermind__button m-button,
+    m-channel__feed m-activityv2 minds-button-thumbs-down a,
+    m-channel__feed m-activityv2 minds-button-comment a,
+    m-channel__feed m-activityv2 m-supermind__button m-button {
       display: none;
     }
     
     m-groups--profile m-activityv2 minds-button-thumbs-down, 
     m-groups--profile m-activityv2 minds-button-comment, 
-    m-groups--profile m-activityv2 m-supermind__button {
+    m-groups--profile m-activityv2 m-supermind__button,
+    m-channel__feed m-activityv2 minds-button-thumbs-down, 
+    m-channel__feed m-activityv2 minds-button-comment, 
+    m-channel__feed m-activityv2 m-supermind__button {
       max-width: 0px;
     }
     
-    m-groups--profile m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
+    m-groups--profile m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
+    m-channel__feed m-activityv2 .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
       display: none;
     }
     
-    m-groups--profile m-activityv2 m-comments__entityoutletv2 {
+    m-groups--profile m-activityv2 m-comments__entityoutletv2,
+    m-channel__feed m-activityv2 m-comments__entityoutletv2 {
       display: none !important;
     }
 
-    m-groups--profile m-activityv2 m-activityv2content__multiimage {
+    m-groups--profile m-activityv2 m-activityv2content__multiimage,
+    m-channel__feed m-activityv2 m-activityv2content__multiimage {
       width: 367px;
     }
     
-    m-groups--profile m-activityv2 m-activityv2content__multiimage > div {
+    m-groups--profile m-activityv2 m-activityv2content__multiimage > div,
+    m-channel__feed m-activityv2 m-activityv2content__multiimage > div {
       padding-bottom: 650px !important;
     }
 
-    m-groups--profile m-activityv2 m-activityv2content__multiimage > div:nth-child(1) {
+    m-groups--profile m-activityv2 m-activityv2content__multiimage > div:nth-child(1),
+    m-channel__feed m-activityv2 m-activityv2content__multiimage > div:nth-child(1) {
       padding-bottom: 650px;
     }
 
     /* Embeds */
-    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail {
+    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail,
+    m-channel__feed m-activityv2 minds-rich-embed a.thumbnail {
       height: 650px;
     }
 
-    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail img {
+    m-groups--profile m-activityv2 minds-rich-embed a.thumbnail img,
+    m-channel__feed m-activityv2 minds-rich-embed a.thumbnail img {
         width: 100% !important;
         height: 100% !important;
         max-height: revert !important;
@@ -445,7 +460,11 @@
     m-groups--profile m-activityv2 minds-rich-embed .m-activityContent__media--richEmbed .meta,
     m-groups--profile m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
     m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
-    m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta {
+    m-groups--profile m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta,
+    m-channel__feed m-activityv2 minds-rich-embed .m-activityContent__media--richEmbed .meta,
+    m-channel__feed m-activityv2 minds-rich-embed .m-rich-embed-src a.meta,
+    m-channel__feed m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-activityContent__media--richEmbed .meta,
+    m-channel__feed m-activityv2 minds-rich-embed.m-richEmbed--activityV2--row .m-rich-embed-src a.meta {
       display: none !important;
      }
     `;
@@ -455,7 +474,8 @@
 
   function removeGridView() {
     const gridviewCSS = `
-    m-groups--profile m-activityv2__content m-activityv2content__multiimage {
+    m-groups--profile m-activityv2__content m-activityv2content__multiimage,
+    m-channel__feed m-activityv2__content m-activityv2content__multiimage {
       min-height: 750px;
       min-width: 750px;
     }
