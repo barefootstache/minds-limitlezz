@@ -33,9 +33,12 @@
     m-newsfeed--boost-rotator,
   m-featured-content, 
   .m-newsfeed--boost-sidebar,
-  .m-groupGrid__right.m-pageLayout__pane--right,
+  .m-groupGrid__right.m-pageLayout__pane--right {
+    display: none;
+  }
+
   m-channelrecommendation {
-    display: none
+    display: none !important;
   }
 
   .m-newsfeed--feed.m-pageLayout__pane--main,
@@ -212,6 +215,7 @@
                 </br>
                 <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
                 <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
+                <a id="hide-media-free" class="marr4 button red-view">HIDE MEDIA FREE</a>
 								<input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
 								<input id="activate-gridview" type="checkbox"> <span>Activate Feed Grid View</span>
             </div>
@@ -313,6 +317,7 @@
   function addContentHider() {
     const hideReminded = document.getElementById("hide-reminded");
     const hideEmbedded = document.getElementById("hide-embedded");
+    const hideMediaFree = document.getElementById("hide-media-free");
 
     hideReminded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
@@ -337,14 +342,25 @@
         }
       }
     });
+    hideMediaFree.addEventListener("click", () => {
+      const items = document.getElementsByTagName("m-activity");
+      for (let i = 0; i < items.length; i++) {
+        if (
+          !items[i].innerHTML.includes("m-activityContent__media--image") &&
+          !items[i].innerHTML.includes("m-activityContent__media--video") &&
+          items[i].style.display != "none"
+        ) {
+          items[i].style.display = "none";
+        }
+      }
+    });
   }
 
   function addGridViewCSS() {
     const gridviewCSS = `
     m-tophighlights,
-    m-channelrecommendation,
     m-feednotice__outlet {
-      display: none !important;
+      display: none;
     }
 
     m-groups--profile .minds-list > div:nth-child(1),
