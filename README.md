@@ -57,6 +57,10 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ## Change Log
 
+### Version 1.5
+
+- minor feature: decrease notification media size
+
 ### Version 1.4
 
 - all feeds have access to grid view

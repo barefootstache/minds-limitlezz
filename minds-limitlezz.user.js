@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.4
+// @version       1.5
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -30,6 +30,23 @@
     .m-pageLayout__container {
       max-width: revert;
     }
+
+    /* Notifications list */
+		m-notifications__list ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--video.m-activityContent--textlessMedia.ng-star-inserted div.m-activityContent__media--video.m-activityContent__media.ng-star-inserted,
+		m-notifications__list ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--video.m-activityContent--textlessMedia.ng-star-inserted div.m-activityContent__media--video.m-activityContent__media.ng-star-inserted m-videoplayer--scrollaware,
+		m-notifications__list ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--video.ng-star-inserted div.m-activityContent__media--video.m-activityContent__media.ng-star-inserted m-videoplayer--scrollaware,
+		m-notifications__list ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--image.m-activityContent--textlessMedia.ng-star-inserted div.m-activityContent__media--image.m-activityContent__media.ng-star-inserted a.m-activityContentMedia__link.ng-star-inserted img.m-border.ng-star-inserted {
+			max-height: 50px;
+			max-width: 50px;
+			height: 50px;
+			width: 50px;
+			display: inline-block;
+		}
+
+		m-notifications__list.m-notifications__list--scrolledPastTabs ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--video.m-activityContent--textlessMedia.ng-star-inserted div.m-activityContent__media--video.m-activityContent__media.ng-star-inserted m-videoplayer--scrollaware m-videoplayer.ng-star-inserted div.m-videoPlayer__placeholder.ng-star-inserted i.material-icons.minds-video-play-icon,
+		m-notifications__list ul li.ng-star-inserted m-notifications__notification a.m-notification__wrapperLink.ng-star-inserted m-newsfeed__entity.ng-star-inserted m-activity.m-border.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--v2.ng-star-inserted m-activityv2.m-activity--minimalMode.m-activity--noOwnerBlock.m-activity--noToolbar.m-activity--isFeed.ng-star-inserted div.m-activity__top div.m-activityTop__mainColumn.ng-star-inserted m-activityv2__content.m-activityContent--minimalMode.m-activityContent--video.ng-star-inserted div.m-activityContent__media--video.m-activityContent__media.ng-star-inserted m-videoplayer--scrollaware m-videoplayer.ng-star-inserted div.m-videoPlayer__placeholder.ng-star-inserted i.material-icons.minds-video-play-icon {
+			font-size: 20px;
+		}
 
     /* Newsfeed page */
     m-newsfeed--boost-rotator,
