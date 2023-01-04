@@ -57,6 +57,10 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ## Change Log
 
+### Version 1.6
+
+- update code after recent Minds update
+
 ### Version 1.5
 
 - minor feature: decrease notification media size
