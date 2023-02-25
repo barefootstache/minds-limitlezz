@@ -1,4 +1,5 @@
 import { Global, Meta } from "./global";
+import { Widget } from "./Widget/widget";
 
 export interface MetaAnalytics {
   activity: string;
@@ -36,7 +37,7 @@ export class Analytics {
                 }
             `;
 
-    addCSS(notificationCss);
+    Widget.addCSS(notificationCss);
 
     const notifListElements = document.getElementsByTagName(
       "m-notifications__list"
@@ -53,7 +54,7 @@ export class Analytics {
 
     let list = notifListElements.namedItem(
       "minds-limitlezz-analytics-notifications-list"
-    ).children;
+    ).children as HTMLCollectionOf<HTMLElement>;
     console.debug(list);
     const analytics = [];
 
@@ -61,7 +62,7 @@ export class Analytics {
       setTimeout(() => {
         list = notifListElements.namedItem(
           "minds-limitlezz-analytics-notifications-list"
-        ).children;
+        ).children as HTMLCollectionOf<HTMLElement>;
         console.debug(list);
       }, 5000);
     } while (list.length < 12);
@@ -83,7 +84,7 @@ export class Analytics {
     if (analytics.length > 0) {
       for (let a = 0; a < analytics.length; a++) {
         const column = document.createElement("li");
-        column.style = `background-color:green;height:${
+        column.style.cssText = `background-color:green;height:${
           analytics[a].balance * 10
         }px;width:20px;margin-right:10px`;
         columns.appendChild(column);
@@ -107,7 +108,7 @@ export class Analytics {
                     display: unset;
                 }`;
 
-      addCSS(notificationCss);
+      Widget.addCSS(notificationCss);
       console.debug("MindsLimitlezz: remove Analytics");
     }
   }

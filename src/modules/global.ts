@@ -1,4 +1,5 @@
 export const ID = "MINDS_LIMITLEZZ";
+export const Minds = {blue: "#1b85d6"};
 
 export interface Meta {
   analytics: boolean;
