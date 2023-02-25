@@ -15,14 +15,13 @@
   "use strict";
 
   const mindsBlue = "#1b85d6";
+  const ID = "MINDS_LIMITLEZZ";
 
   function addCSS(appendCss = "") {
-    const ID = "MINDS_LIMITLEZZ";
-
     // get or create style element
-    const style = document.getElementById(ID) ?
-      document.getElementById(ID) :
-      document.createElement("style");
+    const style = document.getElementById(ID)
+      ? document.getElementById(ID)
+      : document.createElement("style");
 
     // add CSS styles
     const mainCss = `
@@ -252,8 +251,7 @@
       const panel = widget.nextElementSibling;
       if (panel.style.display === "block") {
         panel.style.display = "none";
-      }
-      else {
+      } else {
         panel.style.display = "block";
       }
     });
@@ -263,21 +261,22 @@
 
     console.debug("MindsLimitlezz: add widget");
   }
-  
-  function addAnalyticsWidget(){
-    const newChild = document.createElement('div');
-		newChild.id = "minds-limitlezz-analytics";
-		newChild.innerHTML = `
+
+  function addAnalyticsWidget() {
+    const MindsLimitlezz = {analytics: true}
+    setGlobal(MindsLimitlezz);
+
+    const newChild = document.createElement("div");
+    newChild.id = "minds-limitlezz-analytics";
+    newChild.innerHTML = `
 			<div style="height:300px;background-color:red">
 				<ul id="minds-limitlezz-analytics-columns">
 				</ul>
 			</div>
 		`;
-    
-  	document
-    	.getElementsByTagName("m-notifications__list")[0]
-      .prepend(newChild);
-    
+
+    document.getElementsByTagName("m-notifications__list")[0].prepend(newChild);
+
     const notificationCss = `
 			.m-activityContent__media--image,
  			.m-activityContent__media--video,
@@ -290,76 +289,116 @@
 				display: inline-block;
 			}
 		`;
-    
+
     addCSS(notificationCss);
-    
-    const notifListElements = document.getElementsByTagName("m-notifications__list")[0].children;
-    
-    for(let i=0; i<notifListElements.length; i++){
-  		// assigns id to first <ul> tag
-  		if(notifListElements[i].tagName.toLowerCase() === "ul"){
-    		notifListElements[i].id = "minds-limitlezz-analytics-notifications-list"
+
+    const notifListElements = document.getElementsByTagName(
+      "m-notifications__list"
+    )[0].children;
+
+    for (let i = 0; i < notifListElements.length; i++) {
+      // assigns id to first <ul> tag
+      if (notifListElements[i].tagName.toLowerCase() === "ul") {
+        notifListElements[i].id =
+          "minds-limitlezz-analytics-notifications-list";
         break;
-  		}
-		}
-    
-    const list = notifListElements.namedItem("minds-limitlezz-analytics-notifications-list").children;
+      }
+    }
+
+    let list = notifListElements.namedItem(
+      "minds-limitlezz-analytics-notifications-list"
+    ).children;
     console.debug(list);
     const analytics = [];
-    
-    function innerTextToMeta(innerText){
-		  const charArr = Array.from(innerText);
-  		const textArr = ["","",""];
-  		let text = 0
-  		for(let c = 0; c < charArr.length; c++){
-    		if(charArr[c] !== "\n"){
-      		textArr[text] += charArr[c];
-    		} else {
-      		text++;
-    		}
-  		}
-      
-  		const meta = {
-    		activity: textArr[0],
-    		balance: 1,
-    		mid: textArr[1],
-    		date: textArr[2]
-  		};
-  
-  		const midText = meta.mid.split(" and ");
-  		if(midText.length > 1){
-    		meta.balance += Number(midText[1].split(/\D+/)[0]);
-  		}
-  
-  		return meta;
-		}
 
-		if(list){
-  		for(let j=0; j<list.length; j++){
-    		const meta = innerTextToMeta(list[j].innerText);
+    function innerTextToMeta(innerText) {
+      const charArr = Array.from(innerText);
+      const textArr = ["", "", ""];
+      let text = 0;
+      for (let c = 0; c < charArr.length; c++) {
+        if (charArr[c] !== "\n") {
+          textArr[text] += charArr[c];
+        } else {
+          text++;
+        }
+      }
+
+      const meta = {
+        activity: textArr[0],
+        balance: 1,
+        mid: textArr[1],
+        date: textArr[2],
+      };
+
+      const midText = meta.mid.split(" and ");
+      if (midText.length > 1) {
+        meta.balance += Number(midText[1].split(/\D+/)[0]);
+      }
+
+      return meta;
+    }
+
+    do {
+      setTimeout(()=>{
+        list = notifListElements.namedItem(
+          "minds-limitlezz-analytics-notifications-list"
+        ).children;
+        console.debug(list);
+      },5000)
+    } while (list.length<12);
+
+    if (list.length >= 12) {
+      for (let j = 0; j < list.length; j++) {
+        const meta = innerTextToMeta(list[j].innerText);
+        console.log({meta});
         analytics.push(meta);
-  		}
-		}
-    
-    const columns = document.getElementById("minds-limitlezz-analytics-columns");
-    
+      }
+    }
+
+    const columns = document.getElementById(
+      "minds-limitlezz-analytics-columns"
+    );
+
     console.debug(analytics);
-    
-    if(analytics.length > 0){
-      for(let a=0; a<analytics.length; a++){
-        const column = document.createElement('li');
-        column.style = `background-color:green;height:${analytics[a].balance*10}px;width:20px;margin-right:10px`;
+
+    if (analytics.length > 0) {
+      for (let a = 0; a < analytics.length; a++) {
+        const column = document.createElement("li");
+        column.style = `background-color:green;height:${
+          analytics[a].balance * 10
+        }px;width:20px;margin-right:10px`;
         columns.appendChild(column);
       }
     }
-    
+
     console.debug("MindsLimitlezz: add Analytics");
-    
-    if (document.URL !== "https://www.minds.com/notifications/v3") {
+  }
+
+  function removeAnalyticsWidget() {
+    const MindsLimitlezz = getGlobal();
+    if (MindsLimitlezz.analytics === true) {
+      MindsLimitlezz.analytics = false;
+      setGlobal(MindsLimitlezz);
+
       // reset style
-      addCSS();
+      const notificationCss = `
+			.m-activityContent__media--image,
+ 			.m-activityContent__media--video,
+			m-notifications__enablepushbanner {
+				display: unset;
+			}`;
+
+      addCSS(notificationCss);
       console.debug("MindsLimitlezz: remove Analytics");
     }
+  }
+
+  function getGlobal(){
+    return JSON.parse(localStorage.getItem(ID));
+  }
+
+  function setGlobal(MindsLimitlezz){
+    localStorage.setItem(ID,JSON.stringify(MindsLimitlezz));
   }
 
   function hideContentWidget() {
@@ -373,8 +412,7 @@
       hideReminded.style.display = "none";
       hideEmbedded.style.display = "none";
       hideMediaFree.style.display = "none";
-    }
-    else {
+    } else {
       hideOutdated.style.display = "none";
       hideReminded.style.display = "block";
       hideEmbedded.style.display = "block";
@@ -429,8 +467,7 @@
         autoTime.value = timeInMs;
         distanceInPx = 750;
         autoDistance.value = distanceInPx;
-      }
-      else {
+      } else {
         removeGridView();
         timeInMs = 100;
         autoTime.value = timeInMs;
@@ -450,8 +487,7 @@
         if (e.keyCode == 32) {
           if (state === 1) {
             stop();
-          }
-          else if (state === 0) {
+          } else if (state === 0) {
             start();
           }
         }
@@ -778,11 +814,20 @@
   // --- MAIN --- //
   removeGridView();
 
+  const MindsLimitlezz = {
+    analytics: false,
+  };
+  setGlobal(MindsLimitlezz);
+
   waitForElm(".m-sidebarNavigation__list").then(() => {
     addWidget();
   });
-  
-  waitForElm("m-notifications__list").then(() => {
-    addAnalyticsWidget();
-  });
+
+  if (document.URL === "https://www.minds.com/notifications/v3") {
+    waitForElm("infinite-scroll").then(() => {
+      addAnalyticsWidget();
+    });
+  } else {
+    removeAnalyticsWidget();
+  }
 })();
