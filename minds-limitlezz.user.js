@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.7
+// @version       1.8
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -40,6 +40,7 @@
   m-newsfeed--boost-rotator,
   m-featured-content, 
   .m-newsfeed--boost-sidebar,
+  .minds-limitlezz-widget-hide,
   .m-groupGrid__right.m-pageLayout__pane--right,
   .m-groupsMemberships__sidebar {
     display: none;
@@ -629,10 +630,7 @@
   }
 
   function reorganizeMenu(){
-    const li = document.createElement("li");
-
-    li.className = "m-sidebarNavigation__item";
-    li.innerHTML = `
+    const innerHTML = `
       <a _ngcontent-m-app-c236="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
         <div _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__hoverArea">
           <i _ngcontent-m-app-c236="" class="material-icons">notifications</i>
@@ -641,16 +639,40 @@
       </a>
       `;
 
+    const moveItems = [];
     const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate"];
     const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
     for (const child of children) {
-      console.log(child)
-      if(hideArray.includes(child.textContent)){
-        child.style.display = "none";
+      if(child.textContent === "trending_upBoost") {
+        // Replace boost item with notifications
+        child.innerHTML = innerHTML;
+      } else if(hideArray.includes(child.textContent)){
+        const moveItem = {
+          icon: child.getElementsByTagName('i')[0].textContent,
+          link: child.getElementsByTagName('a')[0].pathname,
+          name: child.getElementsByTagName('span')[0].textContent
+        }
+        moveItems.push(moveItem);
+        child.className += ' minds-limitlezz-widget-hide';
       }
     }
-      // .appendChild(li);
+
+    // only creates on first load, need to refresh to see again
+    waitForElm(".m-sidebarMore__dropdown").then(() => {
+      for (const item of moveItems) {
+        const li = document.createElement("li");
+        li.className = "m-sidebarMoreDropdown__item ng-star-inserted";
+        li.innerHTML = `
+          <a _ngcontent-m-app-c219="" data-ref="sidebarmore-analytics" href="${item.link}">
+            <i _ngcontent-m-app-c219="" class="material-icons">${item.icon}</i>
+            <span _ngcontent-m-app-c219="" class="m-sidebarNavigationItem__text">${item.name}</span>
+          </a>
+        `
+        document.getElementsByClassName("m-sidebarMore__dropdown")[0].prepend(li);
+      }
+    });
   }
+
 
   // Source: https://stackoverflow.com/a/61511955
   // Wait for element to load
