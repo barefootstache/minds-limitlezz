@@ -57,6 +57,17 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ## Change Log
 
+### Version 1.8
+
+- remove unused menu items: boost, affiliate, wallet, supermind, and minds+ and placed them under "More"
+- will see items first load only, need to refresh if clicked away by accident
+- remove pesky info blocks within feed
+- fix search bar styling at head and reduce padding
+
+### Version 1.7
+
+- fix widget height to be full displayed
+
 ### Version 1.6
 
 - update code after recent Minds update

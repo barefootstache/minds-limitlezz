@@ -29,6 +29,7 @@
   /* Removes max width */
   .m-pageLayout__container {
     max-width: revert;
+    padding: 0 20px;
   }
 
   /* Removes super mind button */
@@ -37,6 +38,10 @@
   }
 
   /* Newsfeed page */
+  m-feednotice--plusupgrade,
+  m-feednotice--invitefriends,
+  m-feednotice--boostlatestpost,
+  m-feednotice--enablepushnotifications,
   m-newsfeed--boost-rotator,
   m-featured-content, 
   .m-newsfeed--boost-sidebar,
@@ -44,6 +49,10 @@
   .m-groupGrid__right.m-pageLayout__pane--right,
   .m-groupsMemberships__sidebar {
     display: none;
+  }
+
+  .m-topbar__middleColumn {
+    width: calc(100% - 50px);
   }
 
   m-channelrecommendation {
@@ -630,29 +639,28 @@
   }
 
   function reorganizeMenu(){
-    const innerHTML = `
-      <a _ngcontent-m-app-c236="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
-        <div _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__hoverArea">
-          <i _ngcontent-m-app-c236="" class="material-icons">notifications</i>
-          <span _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
-        </div>
-      </a>
-      `;
-
     const moveItems = [];
     const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate"];
     const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
     for (const child of children) {
+      // creates list of items to prepend under "More"
+      const moveItem = {
+        icon: child.getElementsByTagName('i')[0].textContent,
+        link: child.getElementsByTagName('a')[0].pathname,
+        name: child.getElementsByTagName('span')[0].textContent
+      }
+      moveItems.push(moveItem);
       if(child.textContent === "trending_upBoost") {
-        // Replace boost item with notifications
-        child.innerHTML = innerHTML;
+        // replace boost item with notifications
+        child.innerHTML = `
+        <a _ngcontent-m-app-c236="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
+          <div _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__hoverArea">
+            <i _ngcontent-m-app-c236="" class="material-icons">notifications</i>
+            <span _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
+          </div>
+        </a>
+      `;
       } else if(hideArray.includes(child.textContent)){
-        const moveItem = {
-          icon: child.getElementsByTagName('i')[0].textContent,
-          link: child.getElementsByTagName('a')[0].pathname,
-          name: child.getElementsByTagName('span')[0].textContent
-        }
-        moveItems.push(moveItem);
         child.className += ' minds-limitlezz-widget-hide';
       }
     }
@@ -672,7 +680,6 @@
       }
     });
   }
-
 
   // Source: https://stackoverflow.com/a/61511955
   // Wait for element to load
