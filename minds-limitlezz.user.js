@@ -628,6 +628,30 @@
     }
   }
 
+  function reorganizeMenu(){
+    const li = document.createElement("li");
+
+    li.className = "m-sidebarNavigation__item";
+    li.innerHTML = `
+      <a _ngcontent-m-app-c236="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
+        <div _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__hoverArea">
+          <i _ngcontent-m-app-c236="" class="material-icons">notifications</i>
+          <span _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
+        </div>
+      </a>
+      `;
+
+    const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate"];
+    const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
+    for (const child of children) {
+      console.log(child)
+      if(hideArray.includes(child.textContent)){
+        child.style.display = "none";
+      }
+    }
+      // .appendChild(li);
+  }
+
   // Source: https://stackoverflow.com/a/61511955
   // Wait for element to load
   function waitForElm(selector) {
@@ -655,6 +679,6 @@
 
   waitForElm(".m-sidebarNavigation__list").then(() => {
     addWidget();
-    // reorganizeMenu();
+    reorganizeMenu();
   });
 })();
