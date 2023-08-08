@@ -57,6 +57,18 @@ The user acknowledges that it is their responsibility and not that of the develo
 
 ## Change Log
 
+### Version 1.9
+
+- feat: add grid view to explore section
+- feat: add titles to button components
+- feat: reorganize the widget components
+- feat: add temporary hide boost button
+- feat: add onclick action to checkbox labels
+- feat: remove sidebar on explore section
+- fix: grid view in other sections
+- fix: notification menu item style
+- deprecated: hide outdated functions
+
 ### Version 1.8
 
 - remove unused menu items: boost, affiliate, wallet, supermind, and minds+ and placed them under "More"
