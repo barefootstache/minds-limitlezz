@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.8
+// @version       1.9
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
 // @include       https://www.minds.com/*
-// @copyright     2022, barefootstache (https://openuserjs.org/users/barefootstache)
+// @copyright     2022-2023, barefootstache (https://openuserjs.org/users/barefootstache)
 // @license       MIT
 // @updateURL     https://openuserjs.org/meta/barefootstache/Minds_Limitlezz.meta.js
 // @downloadURL   https://openuserjs.org/install/barefootstache/Minds_Limitlezz.user.js
@@ -93,7 +93,7 @@
 
   /* Minds Limitlezz Widget */
   #minds-limitlezz-widget {
-    height: 400px;
+    height: 500px;
   }
 
   #minds-limitlezz-widget-panel {
@@ -109,11 +109,16 @@
     cursor: pointer;
   }
 
-  .minds-limitlezz-widget-auto-scroller .marr4 {
+  .minds-limitlezz-widget-section .marr4 {
     margin-right: 4px;
   }
 
-  .minds-limitlezz-widget-auto-scroller .button {
+	.minds-limitlezz-widget-section .cursor-pointer:hover {
+		cursor: pointer;
+    color: #fee43b;
+	}
+
+  .minds-limitlezz-widget-section .button {
     background-color: #333;
     padding: 4px;
     cursor: pointer;
@@ -123,22 +128,22 @@
     margin: 4px;
   }
 
-  .minds-limitlezz-widget-auto-scroller .button.green,
-  .minds-limitlezz-widget-auto-scroller .button.red-view {
+  .minds-limitlezz-widget-section .button.green,
+  .minds-limitlezz-widget-section .button.red-view {
     display: block;
   }
   
-  .minds-limitlezz-widget-auto-scroller .button.green:hover {
+  .minds-limitlezz-widget-section .button.green:hover {
     color: green;
     border-color: green;
   }
 
-  .minds-limitlezz-widget-auto-scroller .button.red {
+  .minds-limitlezz-widget-section .button.red {
     display: none;
   }
 
-  .minds-limitlezz-widget-auto-scroller .button.red:hover,
-  .minds-limitlezz-widget-auto-scroller .button.red-view:hover {
+  .minds-limitlezz-widget-section .button.red:hover,
+  .minds-limitlezz-widget-section .button.red-view:hover {
     color: red;
     border-color: red;
   }
@@ -193,6 +198,11 @@
   m-groups--profile m-activity__content .plyr video {
     max-height: 650px;
   }
+
+  /* --- Explore Page --- */
+	.m-discovery__sidebar {
+		display: none;
+	}
   `;
 
     style.innerHTML = mainCss + appendCss;
@@ -222,7 +232,7 @@
                     > Minds Limitlezz </span>
         </a>
         <div id="minds-limitlezz-widget-panel" style="display:block">
-            <div class="minds-limitlezz-widget-auto-scroller">
+            <div class="minds-limitlezz-widget-section">
                 <span class="marr4">Auto Scroller</span>
                 </br>
                 <input id="auto-distance" class="marr4" type="number" style="width: 40px" value="25">
@@ -230,18 +240,19 @@
                 <input id="auto-time" class="marr4" type="number" style="width: 40px" value="100">
                 <span>ms</span>
                 </br>
-                <a id="auto-start" class="marr4 button green">START</a>
-                <a id="auto-stop" class="marr4 button red">STOP</a>
+                <a id="auto-start" class="marr4 button green" title="Starts the Auto Scroller.">START</a>
+                <a id="auto-stop" class="marr4 button red" title="stops the Auto Scroller.">STOP</a>
+                <a id="activate-hotkeys" class="cursor-pointer"><input id="activate-hotkeys-checkbox" type="checkbox"> <span>Activate Hotkeys</span></a>
             </div>
-            <div class="minds-limitlezz-widget-auto-scroller">
+            <div class="minds-limitlezz-widget-section" style="border-top: 1px #fee43b solid">
                 <span class="marr4">Hide Content</span>
                 </br>
-                <a id="hide-reminded" class="marr4 button red-view">HIDE REMINDED</a>
-                <a id="hide-embedded" class="marr4 button red-view">HIDE EMBEDDED</a>
-                <a id="hide-media-free" class="marr4 button red-view">HIDE MEDIA FREE</a>
-                <a id="hide-outdated" class="marr4 button red-view">HIDE OUTDATED</a>
-                <input id="activate-hotkeys" type="checkbox"> <span>Activate Hotkeys</span><br>
-                <input id="activate-gridview" type="checkbox"> <span>Activate Feed Grid View</span>
+                <a id="hide-reminded" class="marr4 button red-view" title="Hides posts that were reminded.">HIDE REMINDED</a>
+                <a id="hide-embedded" class="marr4 button red-view" title="Hides posts that have an embed website.">HIDE EMBEDDED</a>
+                <a id="hide-media-free" class="marr4 button red-view" title="Hides posts that do not contain either an image or video.">HIDE MEDIA FREE</a>
+                <!-- <a id="hide-outdated" class="marr4 button red-view">HIDE OUTDATED</a> -->
+								<a id="hide-boosted" class="marr4 button red-view" title="Hides posts that were boosted.">HIDE BOOSTED</a>
+                <a id="activate-gridview" class="cursor-pointer"><input id="activate-gridview-checkbox" type="checkbox"> <span>Activate Feed Grid View</span></a>
             </div>
         </div>
     `;
@@ -267,13 +278,30 @@
     console.debug("MindsLimitlezz: add widget");
   }
   
+  function switchGridView(isActive) {
+    let timeInMs, distanceInPx;
+    if (isActive) {
+      addGridViewCSS();
+      timeInMs = 2000;
+      distanceInPx = 750;
+    }
+    else {
+      removeGridView();
+      timeInMs = 100;
+      distanceInPx = 25;
+    }
+    return { timeInMs, distanceInPx };
+  }
+  
   function addAutoScroller() {
     const autoDistance = document.getElementById("auto-distance");
     const autoTime = document.getElementById("auto-time");
     const autoStart = document.getElementById("auto-start");
     const autoStop = document.getElementById("auto-stop");
     const activateHotkeys = document.getElementById("activate-hotkeys");
+    const activateHotkeysCheckbox = document.getElementById("activate-hotkeys-checkbox");
     const activateGridView = document.getElementById("activate-gridview");
+    const activateGridViewCheckbox = document.getElementById("activate-gridview-checkbox");
 
     let stopAuto,
       timeInMs = 100,
@@ -303,25 +331,29 @@
     autoTime.addEventListener("change", (el) => {
       timeInMs = el.target.value;
     });
-    activateHotkeys.addEventListener("change", (el) => {
+    activateHotkeysCheckbox.addEventListener("change", (el) => {
       checkedActivateHotkeys = el.target.checked;
     });
-    activateGridView.addEventListener("change", (el) => {
+    activateHotkeys.addEventListener("click", () => {
+      checkedActivateHotkeys = !checkedActivateHotkeys;
+      activateHotkeysCheckbox.checked = checkedActivateHotkeys;
+    });
+    activateGridViewCheckbox.addEventListener("change", (el) => {
       checkedActivateGridView = el.target.checked;
-      if (checkedActivateGridView) {
-        addGridViewCSS();
-        timeInMs = 2000;
-        autoTime.value = timeInMs;
-        distanceInPx = 750;
-        autoDistance.value = distanceInPx;
-      }
-      else {
-        removeGridView();
-        timeInMs = 100;
-        autoTime.value = timeInMs;
-        distanceInPx = 25;
-        autoDistance.value = distanceInPx;
-      }
+      const scrollerObj = switchGridView(checkedActivateGridView);
+      timeInMs = scrollerObj.timeInMs;
+      autoTime.value = timeInMs;
+      distanceInPx = scrollerObj.distanceInPx;
+      autoDistance.value = distanceInPx;
+    });
+    activateGridView.addEventListener("click", () => {
+      checkedActivateGridView = !checkedActivateGridView;
+      activateGridViewCheckbox.checked = checkedActivateGridView;
+      const scrollerObj = switchGridView(checkedActivateGridView);
+      timeInMs = scrollerObj.timeInMs;
+      autoTime.value = timeInMs;
+      distanceInPx = scrollerObj.distanceInPx;
+      autoDistance.value = distanceInPx;
     });
     autoStart.addEventListener("click", () => {
       start();
@@ -349,7 +381,8 @@
     const hideReminded = document.getElementById("hide-reminded");
     const hideEmbedded = document.getElementById("hide-embedded");
     const hideMediaFree = document.getElementById("hide-media-free");
-    const hideOutdated = document.getElementById("hide-outdated");
+    // const hideOutdated = document.getElementById("hide-outdated");
+    const hideBoosted = document.getElementById("hide-boosted");
 
     hideReminded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
@@ -386,11 +419,22 @@
         }
       }
     });
-    hideOutdated.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-publishercard");
+    // hideOutdated.addEventListener("click", () => {
+    //   const items = document.getElementsByTagName("m-publishercard");
+    //   for (let i = 0; i < items.length; i++) {
+    //     if (
+    //       !items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
+    //       items[i].style.display != "none"
+    //     ) {
+    //       items[i].style.display = "none";
+    //     }
+    //   }
+    // });
+    hideBoosted.addEventListener("click", () => {
+      const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
-          !items[i].innerHTML.includes("m-publisherCardAvatar--hasMarker") &&
+          items[i].innerHTML.includes("m-boostedflag") &&
           items[i].style.display != "none"
         ) {
           items[i].style.display = "none";
@@ -409,6 +453,8 @@
     m-groups--profile .minds-list > div:nth-child(1),
     m-newsfeed--subscribed .minds-list,
     m-channel__feed .m-channelFeedList__entities,
+		m-newsfeed__gql .m-newsfeed__list,
+    m-discovery .m-discoveryFeeds__feed,
     m-groupsmemberships div.ng-star-inserted {
       display: grid;
       grid-template-columns: 33% 33% 33%;
@@ -653,10 +699,10 @@
       if(child.textContent === "trending_upBoost") {
         // replace boost item with notifications
         child.innerHTML = `
-        <a _ngcontent-m-app-c236="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
-          <div _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__hoverArea">
-            <i _ngcontent-m-app-c236="" class="material-icons">notifications</i>
-            <span _ngcontent-m-app-c236="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
+        <a _ngcontent-m-app-c237="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
+          <div _ngcontent-m-app-c237="" class="m-sidebarNavigationItem__hoverArea">
+            <i _ngcontent-m-app-c237="" class="material-icons">notifications</i>
+            <span _ngcontent-m-app-c237="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
           </div>
         </a>
       `;
