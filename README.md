@@ -26,7 +26,7 @@ Checking *Activate Group Grid View* will automatically set the values to `2000ms
 - Expands the feed to fill the whole page
 - Can hide reminded content
 - Can hide embedded content
-- Can hide media free content, so text only
+- Can hide media free content, so no text
 
 ### Group Pages
 

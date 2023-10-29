@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.9
+// @version       1.9.1
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -434,7 +434,8 @@
       const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
-          items[i].innerHTML.includes("m-boostedflag") &&
+          (items[i].innerHTML.includes("m-boostedflag") || 
+          items[i].innerHTML.includes("m-activityFlag--boost")) &&
           items[i].style.display != "none"
         ) {
           items[i].style.display = "none";
@@ -750,10 +751,38 @@
   }
 
   // --- MAIN --- //
+  let currentLoadUrl = document.URL;
+  let activityItemsLength = 0;
+
   removeGridView();
 
   waitForElm(".m-sidebarNavigation__list").then(() => {
     addWidget();
     reorganizeMenu();
+  });
+
+  
+  // Hides boosted content onscroll
+  document.addEventListener("scroll", () => {
+    const items = document.getElementsByTagName("m-activity");
+    if(items.length !== activityItemsLength){
+      for (let i = activityItemsLength; i < items.length; i++) {
+        if (
+          (items[i].innerHTML.includes("m-boostedflag") || items[i].innerHTML.includes("m-activityFlag--boost")) &&
+          items[i].style.display != "none"
+        ) {
+          items[i].style.display = "none";
+        }
+      }
+      activityItemsLength = items.length;
+    }
+  });
+
+  // Resets the boosted onscroll counter
+  document.addEventListener("click", () => {
+  	if(currentLoadUrl !== document.URL) {
+      activityItemsLength = 0;
+      currentLoadUrl = document.URL;
+    }
   });
 })();
