@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.9.1
+
+- fix: hide boosted content onscroll
+
 ## Version 1.9
 
 - feat: add grid view to explore section
