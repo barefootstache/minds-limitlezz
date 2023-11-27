@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 1.9.2
+
+- fix: styling of menu items to be calculated from existing items
+- feat: remove "Upgrade" menu item
+
 ## Version 1.9.1
 
 - fix: hide boosted content onscroll

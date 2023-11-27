@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.9.1
+// @version       1.9.2
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -690,7 +690,7 @@
     // icon text + span text
     const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate", "verifiedUpgrade"];
     const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
-    const cNumber = children[0].attributes[0].nodeName.match(/\d+/);
+    let cNumber = children[0].attributes[0].nodeName.match(/\d+/);
     for (const child of children) {
       // creates list of items to prepend under "More"
       const moveItem = {
@@ -716,13 +716,14 @@
 
     // only creates on first load, need to refresh to see again
     waitForElm(".m-sidebarMore__dropdown").then(() => {
+      cNumber = document.getElementsByClassName("m-sidebarMore__dropdown")[0].children[0].attributes[0].nodeName.match(/\d+/)
       for (const item of moveItems) {
         const li = document.createElement("li");
         li.className = "m-sidebarMoreDropdown__item ng-star-inserted";
         li.innerHTML = `
-          <a _ngcontent-m-app-c219="" data-ref="sidebarmore-analytics" href="${item.link}">
-            <i _ngcontent-m-app-c219="" class="material-icons">${item.icon}</i>
-            <span _ngcontent-m-app-c219="" class="m-sidebarNavigationItem__text">${item.name}</span>
+          <a _ngcontent-m-app-c${cNumber}="" data-ref="sidebarmore-analytics" href="${item.link}">
+            <i _ngcontent-m-app-c${cNumber}="" class="material-icons">${item.icon}</i>
+            <span _ngcontent-m-app-c${cNumber}="" class="m-sidebarNavigationItem__text">${item.name}</span>
           </a>
         `
         document.getElementsByClassName("m-sidebarMore__dropdown")[0].prepend(li);
