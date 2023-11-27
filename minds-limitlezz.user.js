@@ -687,8 +687,10 @@
 
   function reorganizeMenu(){
     const moveItems = [];
-    const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate"];
+    // icon text + span text
+    const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate", "verifiedUpgrade"];
     const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
+    const cNumber = children[0].attributes[0].nodeName.match(/\d+/);
     for (const child of children) {
       // creates list of items to prepend under "More"
       const moveItem = {
@@ -700,10 +702,10 @@
       if(child.textContent === "trending_upBoost") {
         // replace boost item with notifications
         child.innerHTML = `
-        <a _ngcontent-m-app-c237="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
-          <div _ngcontent-m-app-c237="" class="m-sidebarNavigationItem__hoverArea">
-            <i _ngcontent-m-app-c237="" class="material-icons">notifications</i>
-            <span _ngcontent-m-app-c237="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
+        <a _ngcontent-m-app-c${cNumber}="" routerlink="/discovery/plus/overview" data-ref="sidenav-plus" href="/notifications/v3">
+          <div _ngcontent-m-app-c${cNumber}="" class="m-sidebarNavigationItem__hoverArea">
+            <i _ngcontent-m-app-c${cNumber}="" class="material-icons">notifications</i>
+            <span _ngcontent-m-app-c${cNumber}="" class="m-sidebarNavigationItem__text m-legible">Notifications</span>
           </div>
         </a>
       `;
