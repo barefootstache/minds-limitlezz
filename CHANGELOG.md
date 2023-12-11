@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 1.9.3
+
+- fix: styling of text in widget in light mode
+- fix: adjust navigation on smaller screen sizes
+- feat: hide some text on smaller screens
+
 ## Version 1.9.2
 
 - fix: styling of menu items to be calculated from existing items
