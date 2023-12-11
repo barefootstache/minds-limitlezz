@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.9.2
+// @version       1.9.3
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -104,6 +104,10 @@
     margin-top: 10px;
   }
 
+  #minds-limitlezz-widget-panel span {
+		color: #b9bbc0;
+	}
+
   #minds-limitlezz-widget-button {
     text-decoration: none;
     cursor: pointer;
@@ -203,6 +207,31 @@
 	.m-discovery__sidebar {
 		display: none;
 	}
+
+  /* --- Screen Size: 480px - 1040px --- */
+	@media screen and (min-width: 480px) and (max-width: 1040px) {
+		.m-pageLayout__container {
+			margin: 0;
+			width: revert;
+		}
+	}
+
+	/* --- Screen Size: < 1220px --- */
+	@media screen and (max-width: 1220px) {
+		.m-pageLayout__pane--left {
+			min-width: 170px;
+			width: 170px;
+		}
+		.m-sidebarNavigation {
+			width: 170px !important;
+		}
+		.less-than-1220 {
+			display: none;
+		}
+		#minds-limitlezz-widget-panel {
+			padding: 0 12px;
+		}
+	}
   `;
 
     style.innerHTML = mainCss + appendCss;
@@ -229,7 +258,7 @@
                 <span  
                     class="m-sidebarNavigationItem__text m-legible"
                     style="font-weight: 700;font-size: 19px;line-height: 24px;"
-                    > Minds Limitlezz </span>
+                    > Limitlezz </span>
         </a>
         <div id="minds-limitlezz-widget-panel" style="display:block">
             <div class="minds-limitlezz-widget-section">
@@ -242,7 +271,7 @@
                 </br>
                 <a id="auto-start" class="marr4 button green" title="Starts the Auto Scroller.">START</a>
                 <a id="auto-stop" class="marr4 button red" title="stops the Auto Scroller.">STOP</a>
-                <a id="activate-hotkeys" class="cursor-pointer"><input id="activate-hotkeys-checkbox" type="checkbox"> <span>Activate Hotkeys</span></a>
+                <a id="activate-hotkeys" class="cursor-pointer"><input id="activate-hotkeys-checkbox" type="checkbox"> <span class="less-than-1220">Activate </span><span>Hotkeys</span></a>
             </div>
             <div class="minds-limitlezz-widget-section" style="border-top: 1px #fee43b solid">
                 <span class="marr4">Hide Content</span>
@@ -252,7 +281,7 @@
                 <a id="hide-media-free" class="marr4 button red-view" title="Hides posts that do not contain either an image or video.">HIDE MEDIA FREE</a>
                 <!-- <a id="hide-outdated" class="marr4 button red-view">HIDE OUTDATED</a> -->
 								<a id="hide-boosted" class="marr4 button red-view" title="Hides posts that were boosted.">HIDE BOOSTED</a>
-                <a id="activate-gridview" class="cursor-pointer"><input id="activate-gridview-checkbox" type="checkbox"> <span>Activate Feed Grid View</span></a>
+                <a id="activate-gridview" class="cursor-pointer"><input id="activate-gridview-checkbox" type="checkbox"> <span class="less-than-1220">Activate </span><span>Feed Grid View</span></a>
             </div>
         </div>
     `;
