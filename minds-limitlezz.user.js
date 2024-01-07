@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.9.3
+// @version       1.9.4
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
 // @include       https://www.minds.com/*
-// @copyright     2022-2023, barefootstache (https://openuserjs.org/users/barefootstache)
+// @copyright     2022-2024, barefootstache (https://openuserjs.org/users/barefootstache)
 // @license       MIT
 // @updateURL     https://openuserjs.org/meta/barefootstache/Minds_Limitlezz.meta.js
 // @downloadURL   https://openuserjs.org/install/barefootstache/Minds_Limitlezz.user.js
@@ -723,9 +723,9 @@
     for (const child of children) {
       // creates list of items to prepend under "More"
       const moveItem = {
-        icon: child.getElementsByTagName('i')[0].textContent,
-        link: child.getElementsByTagName('a')[0].pathname,
-        name: child.getElementsByTagName('span')[0].textContent
+        icon: child.getElementsByTagName('i')[0] ? child.getElementsByTagName('i')[0].textContent : '',
+        link: child.getElementsByTagName('a')[0] ? child.getElementsByTagName('a')[0].pathname : '',
+        name: child.getElementsByTagName('span')[0] ? child.getElementsByTagName('span')[0].textContent : ''
       }
       moveItems.push(moveItem);
       if(child.textContent === "trending_upBoost") {
