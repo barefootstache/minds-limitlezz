@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.9.4
+
+- fix: item parsing under 'More' submenu
+
 ## Version 1.9.3
 
 - fix: styling of text in widget in light mode
