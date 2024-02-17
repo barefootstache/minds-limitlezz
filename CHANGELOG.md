@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.10.0
+
+- feat: add hide fediverse button
+
 ## Version 1.9.4
 
 - fix: item parsing under 'More' submenu
