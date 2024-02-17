@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.9.4
+// @version       1.10.0
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -281,6 +281,7 @@
                 <a id="hide-media-free" class="marr4 button red-view" title="Hides posts that do not contain either an image or video.">HIDE MEDIA FREE</a>
                 <!-- <a id="hide-outdated" class="marr4 button red-view">HIDE OUTDATED</a> -->
 								<a id="hide-boosted" class="marr4 button red-view" title="Hides posts that were boosted.">HIDE BOOSTED</a>
+								<a id="hide-fediverse" class="marr4 button red-view" title="Hides posts from the fediverse.">HIDE FEDIVERSE</a>
                 <a id="activate-gridview" class="cursor-pointer"><input id="activate-gridview-checkbox" type="checkbox"> <span class="less-than-1220">Activate </span><span>Feed Grid View</span></a>
             </div>
         </div>
@@ -412,6 +413,7 @@
     const hideMediaFree = document.getElementById("hide-media-free");
     // const hideOutdated = document.getElementById("hide-outdated");
     const hideBoosted = document.getElementById("hide-boosted");
+    const hideFediverse = document.getElementById("hide-fediverse");
 
     hideReminded.addEventListener("click", () => {
       const items = document.getElementsByTagName("m-activity");
@@ -467,6 +469,16 @@
           items[i].innerHTML.includes("m-activityFlag--boost")) &&
           items[i].style.display != "none"
         ) {
+          items[i].style.display = "none";
+        }
+      }
+    });
+    hideFediverse.addEventListener("click", () => {
+      const regex = /@[^@]+@[^@]+/;
+      const items = document.getElementsByTagName("m-activity");
+      for (let i = 0; i < items.length; i++) {
+        const author = items[i].querySelectorAll('.m-activityOwnerBlock__nameAndBadge a.m-activityOwnerBlock__secondaryName span')[0].innerText;
+        if ( regex.test(author) && items[i].style.display != "none" ) {
           items[i].style.display = "none";
         }
       }
