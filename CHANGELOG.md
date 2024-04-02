@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.11.0
+
+- feat: remove 'Networks' from sidebar
+
 ## Version 1.10.0
 
 - feat: add hide fediverse button
