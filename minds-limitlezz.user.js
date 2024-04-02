@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.10.0
+// @version       1.11.0
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -729,7 +729,7 @@
   function reorganizeMenu(){
     const moveItems = [];
     // icon text + span text
-    const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate", "verifiedUpgrade"];
+    const hideArray = ["trending_upBoost", "add_to_queueMinds+", "tips_and_updatesSupermind", "account_balanceWallet", "volunteer_activismAffiliate", "verifiedUpgrade", "dashboardNetworks"];
     const children = document.getElementsByClassName("m-sidebarNavigation__list")[0].children;
     let cNumber = children[0].attributes[0].nodeName.match(/\d+/);
     for (const child of children) {
