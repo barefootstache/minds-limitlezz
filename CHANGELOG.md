@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 1.12.0
+
+- fix: the grid view has been fixed 
+- fix: media is not stretched anymore
+
 ## Version 1.11.0
 
 - feat: remove 'Networks' from sidebar
