@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.11.0
+// @version       1.12.0
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -33,8 +33,10 @@
   }
 
   /* Removes super mind button */
-  m-supermind__button {
-	    display: none;
+  m-supermind__button,
+  m-activity__toolbar .m-activityToolbar__largeActions,
+  m-activity__boostbutton {
+	  display: none !important;
   }
 
   /* Newsfeed page */
@@ -55,7 +57,8 @@
     width: calc(100% - 50px);
   }
 
-  m-channelrecommendation {
+  m-channelrecommendation,
+  m-feednotice__switch {
     display: none !important;
   }
 
@@ -152,6 +155,11 @@
     border-color: red;
   }
 
+  /* --- Modal --- */
+  .plyr video {
+    max-height: 750px;
+  }
+
   /* --- Channel Page --- */
   m-channel__feed .m-pageLayout__pane--main {
     max-width: revert !important;
@@ -162,44 +170,54 @@
   }
 
   /* --- Groups Page --- */
-  m-groups--profile .m-group__info, .m-group__feeds {
+  m-group__feed .m-group__info, .m-group__feed {
     max-width: revert;
   }
 
   /* Groups Page Info Section */
-  m-groups--profile .m-groupInfo__name.m-group-info-name > div {
+  m-group__feed .m-groupInfo__name.m-group-info-name > div {
     display: flex;
     justify-content: space-between;
   }
 
-  m-groups--profile .m-groupInfo__name.m-group-info-name h1 {
+  m-group__feed .m-groupInfo__name.m-group-info-name h1 {
     font-size: 26px;
   }
 
   /* Groups Page Content Section */
-  m-groups--profile m-activity__content {
+  m-group__feed m-activity__content {
     width: revert !important;
     margin: auto;
   }
 
-  m-groups--profile m-activity__content .m-activityContent__media--image.m-activityContent__media,
-  m-groups--profile m-activity__content .m-activityContent__media--video.m-activityContent__media {
+  m-group__feed m-activity__content .m-activityContent__media--image.m-activityContent__media,
+  m-group__feed m-activity__content .m-activityContent__media--video.m-activityContent__media {
     display: flex;
   }
 
-  m-groups--profile m-activity__content .m-activityContent__media--image.m-activityContent__media a,
-  m-groups--profile m-activity__content .m-activityContent__media--video.m-activityContent__media m-videoplayer--scrollaware {
+  m-group__feed m-activity__content .m-activityContent__media--image.m-activityContent__media a,
+  m-group__feed m-activity__content .m-activityContent__media--video.m-activityContent__media m-videoplayer--scrollaware {
     margin: auto;
   }
 
-  m-groups--profile m-activity__content m-videoplayer--scrollaware {
+  m-group__feed m-activity__content .m-activityContent__media--image.m-activityContent__media img {
+    height: unset !important;
+    width: unset !important;
+  }
+
+  m-group__feed .m-activityContent__media--video .m-videoPlayer__placeholder {
+    padding-top: 500px !important;
+  }
+
+  m-group__feed m-activity__content m-videoplayer--scrollaware {
     height: revert !important;
     width: revert !important;
     min-height: 500px;
     max-height: 750px;
+    min-width: 300px;
   }
 
-  m-groups--profile m-activity__content .plyr video {
+  m-group__feed m-activity__content .plyr video {
     max-height: 650px;
   }
 
@@ -492,8 +510,8 @@
       display: none;
     }
 
-    m-groups--profile .minds-list > div:nth-child(1),
-    m-newsfeed--subscribed .minds-list,
+    m-group__feed .m-groupFeedList__entities,
+    m-newsfeed .minds-list,
     m-channel__feed .m-channelFeedList__entities,
 		m-newsfeed__gql .m-newsfeed__list,
     m-discovery .m-discoveryFeeds__feed,
@@ -506,26 +524,26 @@
       column-gap: 15px;
     }
 
-    m-groups--profile m-activity.m-border:nth-child(1) > m-activity:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
-    m-newsfeed--subscribed m-activity.m-border:nth-child(1) > m-activity:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
+    m-group__feed m-activity.m-border:nth-child(1) > m-activity:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
+    m-newsfeed m-activity.m-border:nth-child(1) > m-activity:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1),
     m-channel__feed m-activity.m-border:nth-child(1) > m-activity:nth-child(1) > div:nth-child(1) > div:nth-child(1) > m-hovercard:nth-child(1) > div:nth-child(1) {
       display: none;
     }
 
-    m-groups--profile m-group-profile__feed.ng-star-inserted,
-    m-newsfeed--subscribed m-group-profile__feed.ng-star-inserted,
+    m-group__feed m-group-profile__feed.ng-star-inserted,
+    m-newsfeed m-group-profile__feed.ng-star-inserted,
     m-channel__feed m-group-profile__feed.ng-star-inserted {
       width: 100%;
     }
 
-    m-groups--profile .m-group__feeds,
-    m-newsfeed--subscribed .m-group__feeds,
-    m-channel__feed .m-group__feeds {
+    m-group__feed .m-group__feed,
+    m-newsfeed .m-group__feed,
+    m-channel__feed .m-group__feed {
       max-width: revert;
     }
 
-    m-groups--profile .m-mindsList__tools,
-    m-newsfeed--subscribed .m-mindsList__tools,
+    m-group__feed .m-group__sidebar,
+    m-newsfeed .m-mindsList__tools,
     m-channel__feed .m-mindsList__tools {
       display: none;
     }
@@ -553,121 +571,142 @@
     }
 
     /* Content Remind */
-    m-newsfeed--subscribed .m-activity__flagRow,
-    m-channel__feed .m-activity__flagRow {
+    m-newsfeed m-activity__flag,
+    m-channel__feed m-activity__flag {
       padding-bottom: revert !important;
       height: 2px;
       background-color: purple;
     }
 
-    m-newsfeed--subscribed .m-activity__flagRow m-activity__flag,
-    m-channel__feed .m-activity__flagRow m-activity__flag {
+    m-newsfeed m-activity__flag .m-activityFlag--remind,
+    m-channel__feed m-activity__flag .m-activityFlag--remind {
       display: none;
     }
 
     /* Content Element */
-    m-groups--profile m-activity .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
-    m-newsfeed--subscribed m-activity .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
+    m-group__feed m-activity .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
+    m-newsfeed m-activity .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted,
     m-channel__feed m-activity .m-activityOwnerBlock__groupName.m-activityOwnerBlock__truncate.ng-star-inserted {
       display: none;
     }
 
-    m-groups--profile m-activity .m-activityContentText__innerWrapper,
-    m-newsfeed--subscribed m-activity .m-activityContentText__innerWrapper,
+    m-group__feed m-activity .m-activityContentText__innerWrapper,
+    m-newsfeed m-activity .m-activityContentText__innerWrapper,
     m-channel__feed m-activity .m-activityContentText__innerWrapper {
       height: 2px;
       background-color: aqua;
       padding: 0 !important;
     }
 
-    m-groups--profile m-activity .m-activityContentText__body,
-    m-groups--profile m-activity .m-activityContentText__title,
-    m-newsfeed--subscribed m-activity .m-activityContentText__body,
-    m-newsfeed--subscribed m-activity .m-activityContentText__title,
+    m-group__feed m-activity .m-activityContentText__body,
+    m-group__feed m-activity .m-activityContentText__title,
+    m-newsfeed m-activity .m-activityContentText__body,
+    m-newsfeed m-activity .m-activityContentText__title,
     m-channel__feed m-activity .m-activityContentText__body,
     m-channel__feed m-activity .m-activityContentText__title {
       display: none;
     }
 
-    m-groups--profile m-activity .m-activityContent__media--image img,
-    m-newsfeed--subscribed m-activity .m-activityContent__media--image img,
+    m-group__feed m-activity .m-activityContent__media--image img,
+    m-newsfeed m-activity .m-activityContent__media--image img,
     m-channel__feed m-activity .m-activityContent__media--image img {
       width: 100% !important;
-      height: 650px !important;
       max-height: 650px !important;
-    }
-    
-    m-groups--profile m-activity m-videoPlayer, m-videoPlayer--scrollaware,
-    m-newsfeed--subscribed m-activity m-videoPlayer, m-videoPlayer--scrollaware,
-    m-channel__feed m-activity m-videoPlayer, m-videoPlayer--scrollaware {
-      width: 100% !important;
-      height: 650px !important;
-      max-height: 650px !important;
+      height: unset !important;
     }
 
-    m-groups--profile m-activity minds-button-thumbs-down a,
-    m-groups--profile m-activity minds-button-comment a,
-    m-groups--profile m-activity m-supermind__button m-button,
-    m-newsfeed--subscribed m-activity minds-button-thumbs-down a,
-    m-newsfeed--subscribed m-activity minds-button-comment a,
-    m-newsfeed--subscribed m-activity m-supermind__button m-button,
+    m-group__feed m-activity .m-activityContent__media,
+    m-group__feed m-activity .m-activityContent__media--richEmbed,
+    m-group__feed m-activity .m-activityContent__quote,
+    m-group__feed m-activity .m-activityContent__quote m-activity__quote,
+    m-newsfeed m-activity .m-activityContent__media,
+    m-newsfeed m-activity .m-activityContent__media--richEmbed,
+    m-newsfeed m-activity .m-activityContent__quote,
+    m-newsfeed m-activity .m-activityContent__quote m-activity__quote,
+    m-channel__feed m-activity .m-activityContent__media,
+    m-channel__feed m-activity .m-activityContent__media--richEmbed,
+    m-channel__feed m-activity .m-activityContent__quote,
+    m-channel__feed m-activity .m-activityContent__quote m-activity__quote {
+      max-height: 650px !important;
+      height: 650px;
+      align-content: center;
+    }
+
+    m-activity__quote m-activity__content .m-activityContent__media {
+      max-height: calc(650px - 58px - 1.25rem) !important;
+    }
+    
+    m-group__feed m-activity m-videoPlayer, m-videoPlayer--scrollaware,
+    m-newsfeed m-activity m-videoPlayer, m-videoPlayer--scrollaware,
+    m-channel__feed m-activity m-videoPlayer, m-videoPlayer--scrollaware {
+      width: 100% !important;
+      max-height: 650px !important;
+      min-width: 300px;
+    }
+
+    m-group__feed m-activity minds-button-thumbs-down a,
+    m-group__feed m-activity minds-button-comment a,
+    m-group__feed m-activity m-supermind__button m-button,
+    m-newsfeed m-activity minds-button-thumbs-down a,
+    m-newsfeed m-activity minds-button-comment a,
+    m-newsfeed m-activity m-supermind__button m-button,
     m-channel__feed m-activity minds-button-thumbs-down a,
     m-channel__feed m-activity minds-button-comment a,
     m-channel__feed m-activity m-supermind__button m-button {
       display: none;
     }
     
-    m-groups--profile m-activity minds-button-thumbs-down, 
-    m-groups--profile m-activity minds-button-comment, 
-    m-groups--profile m-activity m-supermind__button,
-    m-newsfeed--subscribed m-activity minds-button-thumbs-down, 
-    m-newsfeed--subscribed m-activity minds-button-comment, 
-    m-newsfeed--subscribed m-activity m-supermind__button,
+    m-group__feed m-activity minds-button-thumbs-down, 
+    m-group__feed m-activity minds-button-comment, 
+    m-group__feed m-activity m-supermind__button,
+    m-newsfeed m-activity minds-button-thumbs-down, 
+    m-newsfeed m-activity minds-button-comment, 
+    m-newsfeed m-activity m-supermind__button,
     m-channel__feed m-activity minds-button-thumbs-down, 
     m-channel__feed m-activity minds-button-comment, 
     m-channel__feed m-activity m-supermind__button {
       max-width: 0px;
     }
     
-    m-groups--profile m-activity .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
-    m-newsfeed--subscribed m-activity .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
+    m-group__feed m-activity .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
+    m-newsfeed m-activity .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted,
     m-channel__feed m-activity .m-activityTop__avatarColumn.m-activity__avatar.ng-star-inserted {
       display: none;
     }
     
-    m-groups--profile m-activity m-comments__entityoutletv2,
-    m-newsfeed--subscribed m-activity m-comments__entityoutletv2,
+    m-group__feed m-activity m-comments__entityoutletv2,
+    m-newsfeed m-activity m-comments__entityoutletv2,
     m-channel__feed m-activity m-comments__entityoutletv2 {
       display: none !important;
     }
 
-    m-groups--profile m-activity m-activitycontent__multiimage,
-    m-newsfeed--subscribed m-activity m-activitycontent__multiimage,
+    m-group__feed m-activity m-activitycontent__multiimage,
+    m-newsfeed m-activity m-activitycontent__multiimage,
     m-channel__feed m-activity m-activitycontent__multiimage {
       width: 367px;
     }
     
-    m-groups--profile m-activity m-activitycontent__multiimage > div,
-    m-newsfeed--subscribed m-activity m-activitycontent__multiimage > div,
+    m-group__feed m-activity m-activitycontent__multiimage > div,
+    m-newsfeed m-activity m-activitycontent__multiimage > div,
     m-channel__feed m-activity m-activitycontent__multiimage > div {
       padding-bottom: 650px !important;
     }
 
-    m-groups--profile m-activity m-activitycontent__multiimage > div:nth-child(1),
-    m-newsfeed--subscribed m-activity m-activitycontent__multiimage > div:nth-child(1),
+    m-group__feed m-activity m-activitycontent__multiimage > div:nth-child(1),
+    m-newsfeed m-activity m-activitycontent__multiimage > div:nth-child(1),
     m-channel__feed m-activity m-activitycontent__multiimage > div:nth-child(1) {
       padding-bottom: 650px;
     }
 
     /* Embeds */
-    m-groups--profile m-activity minds-rich-embed a.thumbnail,
-    m-newsfeed--subscribed m-activity minds-rich-embed a.thumbnail,
+    m-group__feed m-activity minds-rich-embed a.thumbnail,
+    m-newsfeed m-activity minds-rich-embed a.thumbnail,
     m-channel__feed m-activity minds-rich-embed a.thumbnail {
       height: 650px;
     }
 
-    m-groups--profile m-activity minds-rich-embed a.thumbnail img,
-    m-newsfeed--subscribed m-activity minds-rich-embed a.thumbnail img,
+    m-group__feed m-activity minds-rich-embed a.thumbnail img,
+    m-newsfeed m-activity minds-rich-embed a.thumbnail img,
     m-channel__feed m-activity minds-rich-embed a.thumbnail img {
         width: 100% !important;
         height: 100% !important;
@@ -675,14 +714,14 @@
       }
     }
 
-    m-groups--profile m-activity minds-rich-embed .m-activityContent__media--richEmbed .meta,
-    m-groups--profile m-activity minds-rich-embed .m-rich-embed-src a.meta,
-    m-groups--profile m-activity minds-rich-embed.m-richEmbed--activity--row .m-activityContent__media--richEmbed .meta,
-    m-groups--profile m-activity minds-rich-embed.m-richEmbed--activity--row .m-rich-embed-src a.meta,
-    m-newsfeed--subscribed m-activity minds-rich-embed .m-activityContent__media--richEmbed .meta,
-    m-newsfeed--subscribed m-activity minds-rich-embed .m-rich-embed-src a.meta,
-    m-newsfeed--subscribed m-activity minds-rich-embed.m-richEmbed--activity--row .m-activityContent__media--richEmbed .meta,
-    m-newsfeed--subscribed m-activity minds-rich-embed.m-richEmbed--activity--row .m-rich-embed-src a.meta,
+    m-group__feed m-activity minds-rich-embed .m-activityContent__media--richEmbed .meta,
+    m-group__feed m-activity minds-rich-embed .m-rich-embed-src a.meta,
+    m-group__feed m-activity minds-rich-embed.m-richEmbed--activity--row .m-activityContent__media--richEmbed .meta,
+    m-group__feed m-activity minds-rich-embed.m-richEmbed--activity--row .m-rich-embed-src a.meta,
+    m-newsfeed m-activity minds-rich-embed .m-activityContent__media--richEmbed .meta,
+    m-newsfeed m-activity minds-rich-embed .m-rich-embed-src a.meta,
+    m-newsfeed m-activity minds-rich-embed.m-richEmbed--activity--row .m-activityContent__media--richEmbed .meta,
+    m-newsfeed m-activity minds-rich-embed.m-richEmbed--activity--row .m-rich-embed-src a.meta,
     m-channel__feed m-activity minds-rich-embed .m-activityContent__media--richEmbed .meta,
     m-channel__feed m-activity minds-rich-embed .m-rich-embed-src a.meta,
     m-channel__feed m-activity minds-rich-embed.m-richEmbed--activity--row .m-activityContent__media--richEmbed .meta,
@@ -701,8 +740,8 @@
 
   function removeGridView() {
     const gridviewCSS = `
-    m-groups--profile m-activity__content m-activitycontent__multiimage,
-    m-newsfeed--subscribed m-activity__content m-activitycontent__multiimage,
+    m-group__feed m-activity__content m-activitycontent__multiimage,
+    m-newsfeed m-activity__content m-activitycontent__multiimage,
     m-channel__feed m-activity__content m-activitycontent__multiimage {
       min-height: 750px;
       min-width: 750px;
