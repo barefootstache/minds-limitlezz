@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.12.0
+// @version       1.12.1
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
@@ -434,7 +434,7 @@
     const hideFediverse = document.getElementById("hide-fediverse");
 
     hideReminded.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-activity");
+      const items = document.getElementsByTagName("m-newsfeed__entity");
       for (let i = 0; i < items.length; i++) {
         if (
           (items[i].innerHTML.includes("Reminded") ||
@@ -446,7 +446,7 @@
       }
     });
     hideEmbedded.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-activity");
+      const items = document.getElementsByTagName("m-newsfeed__entity");
       for (let i = 0; i < items.length; i++) {
         if (
           items[i].innerHTML.includes("minds-rich-embed") &&
@@ -457,7 +457,7 @@
       }
     });
     hideMediaFree.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-activity");
+      const items = document.getElementsByTagName("m-newsfeed__entity");
       for (let i = 0; i < items.length; i++) {
         if (
           !items[i].innerHTML.includes("m-activityContent__media--image") &&
@@ -480,7 +480,7 @@
     //   }
     // });
     hideBoosted.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-activity");
+      const items = document.getElementsByTagName("m-newsfeed__entity");
       for (let i = 0; i < items.length; i++) {
         if (
           (items[i].innerHTML.includes("m-boostedflag") || 
@@ -493,7 +493,7 @@
     });
     hideFediverse.addEventListener("click", () => {
       const regex = /@[^@]+@[^@]+/;
-      const items = document.getElementsByTagName("m-activity");
+      const items = document.getElementsByTagName("m-newsfeed__entity");
       for (let i = 0; i < items.length; i++) {
         const author = items[i].querySelectorAll('.m-activityOwnerBlock__nameAndBadge a.m-activityOwnerBlock__secondaryName span')[0].innerText;
         if ( regex.test(author) && items[i].style.display != "none" ) {
