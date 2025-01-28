@@ -1,5 +1,14 @@
 # Change Log
 
+## Version 1.13.0
+
+- fix: hide media
+- feat: expand grid view within groups
+- feat: add grid to discovery page
+- feat: auto hide boosts on discovery page
+- feat: add option to set own custom height for grid items within code using the CSS variable `--default-grid-container-height` within `:root` at the top of file
+- feat: while in grid mode, images within newsfeed, channel, and group are expanded to max item width
+
 ## Version 1.12.0
 
 - fix: the grid view has been fixed 

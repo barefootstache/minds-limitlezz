@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name          Minds Limitlezz
-// @version       1.12.1
+// @version       1.13.0
 // @namespace     https://github.com/barefootstache/minds-limitlezz
 // @icon          https://raw.githubusercontent.com/barefootstache/minds-limitlezz/main/assets/svg/lightning-bolt.svg
 // @description   Upgrade your Minds experience
 // @include       https://www.minds.com/*
-// @copyright     2022-2024, barefootstache (https://openuserjs.org/users/barefootstache)
+// @copyright     2022-2025, barefootstache (https://openuserjs.org/users/barefootstache)
 // @license       MIT
 // @updateURL     https://openuserjs.org/meta/barefootstache/Minds_Limitlezz.meta.js
 // @downloadURL   https://openuserjs.org/install/barefootstache/Minds_Limitlezz.user.js
@@ -15,6 +15,10 @@
   "use strict";
 
   const mindsBlue = "#1b85d6";
+  // --- GLOBAL --- //
+  let currentLoadUrl = document.URL;
+  let activityItemsLength = 0;
+  let activityItemsLength2 = 0;
 
   function addCSS(appendCss = "") {
     const ID = "MINDS_LIMITLEZZ";
@@ -26,6 +30,14 @@
 
     // add CSS styles
     const mainCss = `
+  :root {
+    --default-container-height: 650px;
+  }
+
+  .m-button:focus {
+  	background-color: var(--primary-action-dark) !important;
+  }
+
   /* Removes max width */
   .m-pageLayout__container {
     max-width: revert;
@@ -185,6 +197,10 @@
   }
 
   /* Groups Page Content Section */
+  m-group__feed .m-groupFeed__body {
+  	max-width: 1180px;
+  }
+
   m-group__feed m-activity__content {
     width: revert !important;
     margin: auto;
@@ -218,7 +234,7 @@
   }
 
   m-group__feed m-activity__content .plyr video {
-    max-height: 650px;
+    max-height: var(--default-grid-container-height);
   }
 
   /* --- Explore Page --- */
@@ -434,7 +450,7 @@
     const hideFediverse = document.getElementById("hide-fediverse");
 
     hideReminded.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-newsfeed__entity");
+      const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
           (items[i].innerHTML.includes("Reminded") ||
@@ -446,7 +462,7 @@
       }
     });
     hideEmbedded.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-newsfeed__entity");
+      const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
           items[i].innerHTML.includes("minds-rich-embed") &&
@@ -457,7 +473,7 @@
       }
     });
     hideMediaFree.addEventListener("click", () => {
-      const items = document.getElementsByTagName("m-newsfeed__entity");
+      const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         if (
           !items[i].innerHTML.includes("m-activityContent__media--image") &&
@@ -493,7 +509,7 @@
     });
     hideFediverse.addEventListener("click", () => {
       const regex = /@[^@]+@[^@]+/;
-      const items = document.getElementsByTagName("m-newsfeed__entity");
+      const items = document.getElementsByTagName("m-activity");
       for (let i = 0; i < items.length; i++) {
         const author = items[i].querySelectorAll('.m-activityOwnerBlock__nameAndBadge a.m-activityOwnerBlock__secondaryName span')[0].innerText;
         if ( regex.test(author) && items[i].style.display != "none" ) {
@@ -514,10 +530,14 @@
     m-newsfeed .minds-list,
     m-channel__feed .m-channelFeedList__entities,
 		m-newsfeed__gql .m-newsfeed__list,
-    m-discovery .m-discoveryFeeds__feed,
-    m-groupsmemberships div.ng-star-inserted {
+    m-discovery .m-discoveryFeeds__feed {
       display: grid;
       grid-template-columns: 33% 33% 33%;
+    }
+
+    m-groupsmemberships .m-groupsMembershipsList {
+      display: grid !important;
+      grid-template-columns: 33% 33% 33% !important;
     }
 
     m-groupsmemberships div.ng-star-inserted {
@@ -572,7 +592,8 @@
 
     /* Content Remind */
     m-newsfeed m-activity__flag,
-    m-channel__feed m-activity__flag {
+    m-channel__feed m-activity__flag,
+    m-discovery m-activity__content.m-activityContent--quote > * {
       padding-bottom: revert !important;
       height: 2px;
       background-color: purple;
@@ -592,6 +613,7 @@
 
     m-group__feed m-activity .m-activityContentText__innerWrapper,
     m-newsfeed m-activity .m-activityContentText__innerWrapper,
+    m-discovery m-activity .m-activityContentText__innerWrapper,
     m-channel__feed m-activity .m-activityContentText__innerWrapper {
       height: 2px;
       background-color: aqua;
@@ -602,6 +624,9 @@
     m-group__feed m-activity .m-activityContentText__title,
     m-newsfeed m-activity .m-activityContentText__body,
     m-newsfeed m-activity .m-activityContentText__title,
+    m-discovery__feeditem m-activity .m-activityContentText__body,
+    m-discovery__feeditem m-activity .m-activityContentText__title,
+    m-discovery m-activity .m-activityContentText__innerWrapper *,
     m-channel__feed m-activity .m-activityContentText__body,
     m-channel__feed m-activity .m-activityContentText__title {
       display: none;
@@ -609,9 +634,10 @@
 
     m-group__feed m-activity .m-activityContent__media--image img,
     m-newsfeed m-activity .m-activityContent__media--image img,
+    m-discovery__feeditem m-activity .m-activityContent__media--image img,
     m-channel__feed m-activity .m-activityContent__media--image img {
       width: 100% !important;
-      max-height: 650px !important;
+      max-height: var(--default-grid-container-height) !important;
       height: unset !important;
     }
 
@@ -626,21 +652,29 @@
     m-channel__feed m-activity .m-activityContent__media,
     m-channel__feed m-activity .m-activityContent__media--richEmbed,
     m-channel__feed m-activity .m-activityContent__quote,
+    m-discovery__feeditem m-activity .m-activityContent__media,
+    m-discovery__feeditem m-activity .m-activityContent__media--richEmbed
+    m-discovery__feeditem m-activity .m-activityContent__quote {
+      max-height: var(--default-grid-container-height) !important;
+      height: var(--default-grid-container-height);
+      align-content: center;
+    }
+
     m-channel__feed m-activity .m-activityContent__quote m-activity__quote {
-      max-height: 650px !important;
-      height: 650px;
+      max-height: calc(var(--default-grid-container-height) - 2rem) !important;
+      height: calc(var(--default-grid-container-height) - 2rem);
       align-content: center;
     }
 
     m-activity__quote m-activity__content .m-activityContent__media {
-      max-height: calc(650px - 58px - 1.25rem) !important;
+      max-height: calc(var(--default-grid-container-height) - 58px - 2rem) !important;
     }
     
     m-group__feed m-activity m-videoPlayer, m-videoPlayer--scrollaware,
     m-newsfeed m-activity m-videoPlayer, m-videoPlayer--scrollaware,
     m-channel__feed m-activity m-videoPlayer, m-videoPlayer--scrollaware {
       width: 100% !important;
-      max-height: 650px !important;
+      max-height: var(--default-grid-container-height) !important;
       min-width: 300px;
     }
 
@@ -689,20 +723,20 @@
     m-group__feed m-activity m-activitycontent__multiimage > div,
     m-newsfeed m-activity m-activitycontent__multiimage > div,
     m-channel__feed m-activity m-activitycontent__multiimage > div {
-      padding-bottom: 650px !important;
+      padding-bottom: var(--default-grid-container-height) !important;
     }
 
     m-group__feed m-activity m-activitycontent__multiimage > div:nth-child(1),
     m-newsfeed m-activity m-activitycontent__multiimage > div:nth-child(1),
     m-channel__feed m-activity m-activitycontent__multiimage > div:nth-child(1) {
-      padding-bottom: 650px;
+      padding-bottom: var(--default-grid-container-height);
     }
 
     /* Embeds */
     m-group__feed m-activity minds-rich-embed a.thumbnail,
     m-newsfeed m-activity minds-rich-embed a.thumbnail,
     m-channel__feed m-activity minds-rich-embed a.thumbnail {
-      height: 650px;
+      height: var(--default-grid-container-height);
     }
 
     m-group__feed m-activity minds-rich-embed a.thumbnail img,
@@ -735,6 +769,8 @@
     if (document.URL === "https://www.minds.com/groups/memberships") {
       // document.getElementsByTagName("infinite-scroll")[0].addEventListener("scroll", () => {
       window.addEventListener("scroll", highlightNew);
+    } else {
+      window.addEventListener("scroll", resizeContainerElement);
     }
   }
 
@@ -751,6 +787,32 @@
     addCSS(gridviewCSS);
 
     window.removeEventListener("scroll", highlightNew);
+  }
+
+  function createClassGroupSelector(parentClasses, childClass) {
+    return parentClasses.map(el => `${el} ${childClass}`).reduce((prev, curr) => `${prev}, ${curr}`);
+  }
+  
+  function resizeContainerElement() {
+    const pages = ['m-group__feed .m-groupFeedList__entities',
+    'm-newsfeed .minds-list',
+    'm-channel__feed .m-channelFeedList__entities',
+	  'm-newsfeed__gql .m-newsfeed__list',
+    'm-discovery .m-discoveryFeeds__feed'];
+    const items = document.querySelectorAll(createClassGroupSelector(pages, '.m-activity__top'));
+    if(items.length !== activityItemsLength2) {
+      const wait1 = createClassGroupSelector(pages, `m-newsfeed__entity:nth-child(${activityItemsLength2+5}) .m-activity__top`);
+      const wait2 = createClassGroupSelector(pages, `m-activity:nth-child(${activityItemsLength2+5}) .m-activity__top`);
+      waitForElm(`${wait1}, ${wait2}`).then(() => {
+        for (let i = activityItemsLength2; i < items.length; i++) {
+          const content = items[i].querySelector('m-activity__content');
+          const avatar = items[i].querySelector('.m-activityTop__avatarColumn');
+          content.style.width = items[i].clientWidth;
+          content.style.marginLeft = `-${avatar.clientWidth}px`;
+        }
+        activityItemsLength2 = items.length;
+      });
+    }
   }
 
   function highlightNew() {
@@ -834,20 +896,21 @@
   }
 
   // --- MAIN --- //
-  let currentLoadUrl = document.URL;
-  let activityItemsLength = 0;
-
   removeGridView();
 
   waitForElm(".m-sidebarNavigation__list").then(() => {
     addWidget();
     reorganizeMenu();
   });
-
   
   // Hides boosted content onscroll
   document.addEventListener("scroll", () => {
-    const items = document.getElementsByTagName("m-activity");
+    let items = [];
+    if (currentLoadUrl.startsWith('https://www.minds.com/discovery')) {
+    	items = document.getElementsByTagName("m-discovery__feeditem");
+    } else {
+      items = document.getElementsByTagName("m-activity");
+    }
     if(items.length !== activityItemsLength){
       for (let i = activityItemsLength; i < items.length; i++) {
         if (
