@@ -1,6 +1,6 @@
 # Minds Limitlezz
 
-![Minds Limitlezz Widget](./assets/img/v1.3-minds-limitlezz-widget.png)
+![Minds Limitlezz Widget](./assets/img/v1.10-minds-limitlezz-widget.png)
 
 Improve your Minds experience.
 
@@ -27,6 +27,7 @@ Checking *Activate Group Grid View* will automatically set the values to `2000ms
 - Can hide reminded content
 - Can hide embedded content
 - Can hide media free content, so no text
+- Can hide fediverse content
 
 ### Group Pages
 
